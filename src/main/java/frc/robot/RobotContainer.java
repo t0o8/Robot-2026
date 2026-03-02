@@ -10,6 +10,7 @@ import static edu.wpi.first.units.Units.MetersPerSecond;
 
 import java.util.function.Supplier;
 
+import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.geometry.Translation3d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
@@ -31,6 +32,7 @@ import frc.robot.subsystems.intake.IntakeIOReal;
 import frc.robot.subsystems.intake.IntakeSubsystem;
 import frc.robot.subsystems.lights.LightSubsystem;
 import frc.robot.subsystems.logging.VisualizerSubsystem;
+import frc.robot.subsystems.turret.CalculationSubsystem;
 import frc.robot.subsystems.turret.KickerIO;
 import frc.robot.subsystems.turret.KickerIOReal;
 import frc.robot.subsystems.turret.KickerSubsystem;
@@ -66,6 +68,7 @@ public class RobotContainer {
 	public static final ProjectileSimulation projectileSimulation = new ProjectileSimulation();
 	public static final VisualizerSubsystem visualizerSubsystem = new VisualizerSubsystem();
 	public static final LightSubsystem lightSubsystem = new LightSubsystem();
+	public static final CalculationSubsystem calculationSubsystem = new CalculationSubsystem();
 
 	public static final CommandXboxController driverController = new CommandXboxController(Constants.OperatorConstants.DRIVER_CONTROLLER_PORT);
 	
@@ -138,7 +141,7 @@ public class RobotContainer {
 		}
 
 		if (Constants.TurretConstants.ENABLED) {
-			turretSubsystem.setDefaultCommand(new ManualAimCommand());
+			turretSubsystem.setDefaultCommand(new TurretAutoAimCommand());
 		}
 
 
@@ -153,7 +156,16 @@ public class RobotContainer {
 		return Commands.print("No autonomous command configured");
 	}
 
+	public void initAll() {
+		shooterSubsystem.resetShooter();
+
+		calculationSubsystem.updateAimingPositions();
+	}
+
 	public void periodic() {
-		
+		Pose2d botPose = swerveSubsystem.getPose2d();
+
+		calculationSubsystem.updateBotZone(botPose);
+		calculationSubsystem.updateTrajectoryCalculations(botPose);
 	}
 }

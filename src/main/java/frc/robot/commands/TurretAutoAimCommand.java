@@ -18,7 +18,6 @@ import frc.robot.libraries.ProjectileSimulation.TargetErrorCode;
 import frc.robot.libraries.ProjectileSimulation.TargetSolution;
 
 public class TurretAutoAimCommand extends Command {
-    private Translation3d hubPosition;
 
     public TurretAutoAimCommand() {
         addRequirements(RobotContainer.turretSubsystem, RobotContainer.shooterSubsystem);
@@ -26,52 +25,21 @@ public class TurretAutoAimCommand extends Command {
     
     @Override
     public void initialize() {
-        hubPosition = FieldHelpers.rotateBlueFieldCoordinates(new Translation3d(
-            Constants.FieldConstants.HUB_SIDE_DISTANCE.in(Meter),
-            Constants.FieldConstants.FIELD_SIZE_Y.in(Meter) / 2.0,
-            Constants.FieldConstants.HUB_TARGET_HEIGHT.in(Meter)
-        ), !RobotContainer.isBlueAlliance());
+
     }
 
     @Override
     public void execute() {
-        Pose2d robotPose = RobotContainer.swerveSubsystem.getPose2d();
-
-        Translation3d robotHubRelative = new Translation3d(
-            hubPosition.getX() - robotPose.getX(),
-            hubPosition.getY() - robotPose.getY(),
-            hubPosition.getZ()
-        );
-
-        ChassisSpeeds fieldSpeeds = RobotContainer.swerveSubsystem.getFieldChassisSpeeds();
-
-        TargetSolution solution = RobotContainer.projectileSimulation.calculateLaunchAngleSimulation(
-            RobotContainer.projectileSimulation.convertShooterSpeedToVelocity(Constants.ShooterConstants.SHOOTER_MAX_VELOCITY, Constants.ShooterConstants.SHOOTER_WHEEL_RADIUS, 0.5),
-            DegreesPerSecond.of(0),
-            new Translation2d(
-                fieldSpeeds.vxMetersPerSecond,
-                fieldSpeeds.vyMetersPerSecond
-            ),
-            robotHubRelative,
-            Constants.FuelPhysicsConstants.MAX_STEPS,
-            Constants.FuelPhysicsConstants.TPS
-            
-        );
-
-        SmartDashboard.putString("Auto Aim/Error Code", solution.errorCode().name());
-        SmartDashboard.putString("Auto Aim/Solution Debug", solution.targetDebug().toString());
-        SmartDashboard.putBoolean("Auto Aim/Error", solution.errorCode() == TargetErrorCode.NONE);
-        if (solution.errorCode() == TargetErrorCode.NONE) {
-            Angle robotRelativeAngle = RobotContainer.turretSubsystem.getTurretPointAngle(solution.launchYaw());
+        TargetSolution targetSolution = RobotContainer.calculationSubsystem.getTargetSolution();
+        if (targetSolution.errorCode() == TargetErrorCode.NONE) {
+            Angle robotRelativeAngle = RobotContainer.turretSubsystem.getTurretPointAngle(targetSolution.launchYaw());
             RobotContainer.turretSubsystem.setTurretYaw(robotRelativeAngle);
 
-            RobotContainer.turretSubsystem.setTurretPitch(solution.launchPitch());
+            RobotContainer.turretSubsystem.setTurretPitch(targetSolution.launchPitch());
 
-            AngularVelocity shooterSpeed = RobotContainer.projectileSimulation.convertVelocityToShooterSpeed(solution.launchSpeed(), Constants.ShooterConstants.SHOOTER_WHEEL_RADIUS, 0.5);
+            AngularVelocity shooterSpeed = RobotContainer.projectileSimulation.convertVelocityToShooterSpeed(targetSolution.launchSpeed(), Constants.ShooterConstants.SHOOTER_WHEEL_RADIUS, 0.5);
 
             RobotContainer.shooterSubsystem.setTargetSpeed(shooterSpeed);
-        } else {
-            System.out.println(solution);
         }
 
         

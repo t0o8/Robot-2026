@@ -33,7 +33,7 @@ import edu.wpi.first.wpilibj.util.Color;
 
 public final class Constants {
     public static class SwerveConstants {
-        public static final boolean ENABLED = false;
+        public static final boolean ENABLED = true;
         
         public static final File SWERVE_DIRECTORY = new File(Filesystem.getDeployDirectory(), "swerve"); // File with swerve configs
         public static final LinearVelocity MAX_SPEED = MetersPerSecond.of(10); // Maximum speed the swerve drive can go
@@ -41,7 +41,7 @@ public final class Constants {
     }
 
     public final class TurretConstants {
-        public static final boolean ENABLED = false;
+        public static final boolean ENABLED = true;
 
         public static final int TURRET_YAW_MOTOR_ID = 10;
         public static final boolean TURRET_YAW_MOTOR_INVERTED = false;
@@ -167,5 +167,7 @@ public final class Constants {
         public static final Distance FIELD_SIZE_Y = Meter.of(8.07);
         public static final Distance HUB_SIDE_DISTANCE = Meter.of(4.62344);
         public static final Distance HUB_TARGET_HEIGHT = Meter.of(1.9);
+        public static final Distance PASS_SIDE_DISTANCE = Meter.of(3);
+        public static final Distance PASS_OFFSET = Meter.of(2);
     }
 }

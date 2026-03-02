@@ -40,9 +40,11 @@ public class Robot extends LoggedRobot {
 
 	@Override
 	public void robotPeriodic() {
-		CommandScheduler.getInstance().run();
+		if (isEnabled()) {
+			robotContainer.periodic();
+		}
 
-		robotContainer.periodic();
+		CommandScheduler.getInstance().run();
 	}
 
 	@Override
@@ -68,7 +70,7 @@ public class Robot extends LoggedRobot {
 			m_autonomousCommand.schedule();
 		}
 
-		RobotContainer.shooterSubsystem.resetShooter();
+		robotContainer.initAll();
 	}
 
 	@Override
@@ -87,7 +89,7 @@ public class Robot extends LoggedRobot {
 			m_autonomousCommand.cancel();
 		}
 
-		RobotContainer.shooterSubsystem.resetShooter();
+		robotContainer.initAll();
 	}
 
 	@Override
@@ -103,8 +105,7 @@ public class Robot extends LoggedRobot {
 	@Override
 	public void testInit() {
 		CommandScheduler.getInstance().cancelAll();
-
-		RobotContainer.shooterSubsystem.resetShooter();
+		robotContainer.initAll();
 	}
 
 	@Override

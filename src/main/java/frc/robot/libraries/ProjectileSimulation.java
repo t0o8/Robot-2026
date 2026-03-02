@@ -6,6 +6,7 @@ import static edu.wpi.first.units.Units.MetersPerSecond;
 import static edu.wpi.first.units.Units.MetersPerSecondPerSecond;
 import static edu.wpi.first.units.Units.Radians;
 import static edu.wpi.first.units.Units.RadiansPerSecond;
+import static edu.wpi.first.units.Units.Second;
 
 import java.util.ArrayList;
 import edu.wpi.first.math.MathUtil;
@@ -15,6 +16,8 @@ import edu.wpi.first.units.measure.Angle;
 import edu.wpi.first.units.measure.AngularVelocity;
 import edu.wpi.first.units.measure.Distance;
 import edu.wpi.first.units.measure.LinearVelocity;
+import edu.wpi.first.units.measure.Time;
+import edu.wpi.first.wpilibj.Timer;
 import frc.robot.Constants;
 
 public class ProjectileSimulation {
@@ -72,12 +75,14 @@ public class ProjectileSimulation {
      * @param launchSpeed Stores the launch speed of the projectile as an {@link LinearVelocity}
      * @param launchPitch Stores the launch pitch of the projectile as an {@link Angle}
      * @param launchYaw Stores the launch yaw of the projectile as an {@link Angle}
+     * @param timestamp Stores the timestamp the result was calculated from as a {@link Time}
      */
     public record TargetSolution (
         TargetErrorCode errorCode,
         LinearVelocity launchSpeed,
         Angle launchPitch,
         Angle launchYaw,
+        Time timestamp,
         TargetDebug targetDebug
     ) {};
 
@@ -441,7 +446,7 @@ public class ProjectileSimulation {
         Angle launchAnglePitch1Temp = calculateLaunchPitchIdeal(startLaunchSpeed, horizontalDistance, Meter.of(targetPosition.getZ() - Constants.TurretConstants.TURRET_PIVOT_OFFSET.getZ()));
 
         if (launchAnglePitch1Temp == null) {
-            return new TargetSolution(TargetErrorCode.IDEAL_PITCH, MetersPerSecond.of(0), Radians.of(0.0), Radians.of(0.0), new TargetDebug(0, 0, 0));
+            return new TargetSolution(TargetErrorCode.IDEAL_PITCH, MetersPerSecond.of(0), Radians.of(0.0), Radians.of(0.0), Second.of(Timer.getTimestamp()), new TargetDebug(0, 0, 0));
         }
 
         double pitchLimitUpper = Constants.TurretConstants.TURRET_PITCH_UPPER_LIMIT.in(Radians);
@@ -549,7 +554,8 @@ public class ProjectileSimulation {
             solutionFound,
             MetersPerSecond.of(launchSpeed),
             Radians.of(launchPitch),
-            Radians.of(launchYaw), 
+            Radians.of(launchYaw),
+            Second.of(Timer.getTimestamp()),
             new TargetDebug(pitchYawSteps, error[0], error[1])
         );
 

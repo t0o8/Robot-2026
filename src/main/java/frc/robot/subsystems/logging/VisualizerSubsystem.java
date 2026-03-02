@@ -21,26 +21,22 @@ import frc.robot.libraries.PoseHelpers;
 
 public class VisualizerSubsystem extends SubsystemBase {
     private final boolean isSimulation = Robot.isSimulation();
-    private Translation3d hubPosition;
     
     public VisualizerSubsystem() {
-        hubPosition = FieldHelpers.rotateBlueFieldCoordinates(new Translation3d(
-            Constants.FieldConstants.HUB_SIDE_DISTANCE.in(Meter),
-            Constants.FieldConstants.FIELD_SIZE_Y.in(Meter) / 2.0,
-            Constants.FieldConstants.HUB_TARGET_HEIGHT.in(Meter)
-        ), !RobotContainer.isBlueAlliance());
+
     }
 
     @Override
     public void periodic() {
         if (isSimulation) {
+            Translation3d targetPosition = RobotContainer.calculationSubsystem.getTargetPosition();
 
             Pose2d robotPose = RobotContainer.swerveSubsystem.getPose2d();
 
-            Translation3d robotHubRelative = new Translation3d(
-                hubPosition.getX() - robotPose.getX(),
-                hubPosition.getY() - robotPose.getY(),
-                hubPosition.getZ()
+            Translation3d robotTargetRelative = new Translation3d(
+                targetPosition.getX() - robotPose.getX(),
+                targetPosition.getY() - robotPose.getY(),
+                targetPosition.getZ()
             );
             
             LinearVelocity launchSpeed = RobotContainer.projectileSimulation.convertShooterSpeedToVelocity(
@@ -65,8 +61,8 @@ public class VisualizerSubsystem extends SubsystemBase {
                     fieldSpeeds.vxMetersPerSecond,
                     fieldSpeeds.vyMetersPerSecond
                 ),
-                robotHubRelative,
-                Radian.of(Math.atan2(robotHubRelative.getY(), robotHubRelative.getX())),
+                robotTargetRelative,
+                Radian.of(Math.atan2(robotTargetRelative.getY(), robotTargetRelative.getX())),
                 true,
                 Constants.FuelPhysicsConstants.TPS
             );
