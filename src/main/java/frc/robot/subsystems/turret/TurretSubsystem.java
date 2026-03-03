@@ -3,6 +3,7 @@ package frc.robot.subsystems.turret;
 import static edu.wpi.first.units.Units.Radian;
 import static edu.wpi.first.units.Units.RadiansPerSecond;
 import static edu.wpi.first.units.Units.RadiansPerSecondPerSecond;
+import static edu.wpi.first.units.Units.Volt;
 import static edu.wpi.first.units.Units.Volts;
 
 import edu.wpi.first.math.MathUtil;
@@ -13,6 +14,7 @@ import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
 import edu.wpi.first.units.measure.Angle;
 import edu.wpi.first.units.measure.AngularVelocity;
+import edu.wpi.first.units.measure.Voltage;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
@@ -29,7 +31,8 @@ public class TurretSubsystem extends SubsystemStateMachine<frc.robot.subsystems.
         HOMING,
         STOWED,
         AIMING,
-        READY
+        READY,
+        MANUAL
     }
 
     private final TurretIO io;
@@ -67,6 +70,9 @@ public class TurretSubsystem extends SubsystemStateMachine<frc.robot.subsystems.
         Constants.TurretConstants.TURRET_PITCH_A // Unit is V/(rad/s^2)
     );
     private double turretPrevPitchSetpointVelocity = 0;
+
+    private double turretManualYawVoltage = 0;
+    private double turretManualPitchVoltage = 0;
 
     public TurretSubsystem(TurretIO io) {
         super(TurretState.IDLE);
@@ -148,13 +154,18 @@ public class TurretSubsystem extends SubsystemStateMachine<frc.robot.subsystems.
         return turretPitchVoltage;
     }
 
+    public void setOverrideVoltages(Voltage yawVoltage, Voltage pitchVoltage) {
+        turretManualYawVoltage = yawVoltage.in(Volt);
+        turretManualPitchVoltage = pitchVoltage.in(Volt);
+    }
+
     @Override
-public void periodic() {
+    public void periodic() {
         if (RobotContainer.calculationSubsystem.getZone() == Zone.TRENCH) {
             setDesiredState(TurretState.STOWED);
         }
 
-        // Safety Check as the desired state should only ever IDLE, HOMING, STOWED, or READY
+        // Safety Check as the desired state should only ever IDLE, HOMING, STOWED, READY, or MANUAL
         if (getDesiredState() == TurretState.AIMING) {
             setDesiredState(TurretState.IDLE);
         }
@@ -234,6 +245,24 @@ public void periodic() {
                 }
 
                 break;
+
+            case MANUAL:
+                if (getDesiredState() == TurretState.IDLE) {
+                    transitionTo(TurretState.IDLE);
+                } else if (getDesiredState() == TurretState.STOWED) {
+                    resetTurretPitch();
+                    resetTurretYaw();
+                    transitionTo(TurretState.STOWED);
+                } else if (getDesiredState() == TurretState.HOMING) {
+                    resetTurretPitch();
+                    resetTurretYaw();
+                    transitionTo(TurretState.HOMING);
+                } else if (getDesiredState() == TurretState.READY) {
+                    resetTurretPitch();
+                    resetTurretYaw();
+                    transitionTo(TurretState.AIMING);
+                }
+                break;
         }
 
         double turretYawVoltage = 0.0;
@@ -264,7 +293,15 @@ public void periodic() {
                 turretYawVoltage = calculateTurretYawVoltage();
                 turretPitchVoltage = caclulateTurretPitchVoltage();
                 break;
+            case MANUAL:
+                turretYawVoltage = turretManualYawVoltage;
+                turretPitchVoltage = turretManualPitchVoltage;
+                break;
+
         }
+
+        turretYawVoltage = MathUtil.clamp(turretYawVoltage, -12, 12);
+        turretPitchVoltage = MathUtil.clamp(turretPitchVoltage, -12, 12);
 
         io.setYawMotorVoltage(turretYawVoltage);
         io.setPitchMotorVoltage(turretPitchVoltage);
@@ -279,6 +316,6 @@ public void periodic() {
         SmartDashboard.putString("Turret/Desired State", getDesiredState().name());
 
         SmartDashboard.putNumber("Turret/Target Yaw", turretYawPID.getGoal().position * (180 / Math.PI));
-        SmartDashboard.putNumber("Turret/Target Pitch", turretPitchPID.getGoal().position * (180 / Math.PI));SmartDashboard.putNumber("Turret/Target Pitch", turretPitchPID.getGoal().position * (180 / Math.PI));
+        SmartDashboard.putNumber("Turret/Target Pitch", turretPitchPID.getGoal().position * (180 / Math.PI));
     }
 }

@@ -8,6 +8,8 @@ public abstract class SubsystemStateMachine<E extends Enum<E>> extends Subsystem
     protected E currentState;
     protected E desiredState;
 
+    protected E overrideState;
+
     protected final Timer stateTimer = new Timer();
 
     public SubsystemStateMachine(E startingState) {
@@ -26,6 +28,10 @@ public abstract class SubsystemStateMachine<E extends Enum<E>> extends Subsystem
     }
 
     public E getDesiredState() {
+        if (this.overrideState != null) {
+            return this.overrideState;
+        }
+
         return this.desiredState;
     }
 
@@ -35,6 +41,18 @@ public abstract class SubsystemStateMachine<E extends Enum<E>> extends Subsystem
 
     public void restartStateTimer() {
         this.stateTimer.restart();
+    }
+
+    public void setOverrideState(E overrideState) {
+        this.overrideState = overrideState;
+        if (this.overrideState != null) {
+            transitionTo(this.overrideState);
+        }
+        
+    }
+
+    public E getOverrideState() {
+        return this.overrideState;
     }
 
     /**
@@ -50,7 +68,11 @@ public abstract class SubsystemStateMachine<E extends Enum<E>> extends Subsystem
      * @param newState The state to transition too
      **/
     protected void transitionTo(E newState) {
-        if (newState != currentState) {
+        if (this.overrideState != newState && this.overrideState != null) {
+            return;
+        }
+
+        if (newState != currentState && newState != null) {
             this.currentState = newState;
             
             this.stateTimer.restart();
