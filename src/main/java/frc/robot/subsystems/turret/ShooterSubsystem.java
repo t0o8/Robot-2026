@@ -92,7 +92,7 @@ public class ShooterSubsystem extends SubsystemStateMachine<frc.robot.subsystems
 
         // Safety Check as the desired state should only ever IDLE or READY
         if (getDesiredState() == ShooterState.SPOOLING) {
-            requestDesiredState(ShooterState.IDLE, 10);
+            requestDesiredState(ShooterState.IDLE, 4);
         }
         
         

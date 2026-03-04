@@ -54,6 +54,10 @@ public abstract class SubsystemStateMachine<E extends Enum<E>> extends Subsystem
      * </ul>
      */
     public void requestDesiredState(E newState, int priority) {
+        if (newState == null) {
+            return;
+        }
+
         if (priority >= pendingPriority) {
             this.pendingPriority = priority;
             this.pendingState = newState;

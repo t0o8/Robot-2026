@@ -30,7 +30,7 @@ public class IntakeDeploymentSubsystem extends SubsystemStateMachine<frc.robot.s
 
         // Safety Check as the desired state should only ever RETRACTED, OR DEPLOYED
         if (getDesiredState() == IntakeDeploymentState.UNKNOWN || getDesiredState() == IntakeDeploymentState.RETRACTING || getDesiredState() == IntakeDeploymentState.DEPLOYING) {
-            requestDesiredState(IntakeDeploymentState.RETRACTED, 10);
+            requestDesiredState(IntakeDeploymentState.RETRACTED, 5);
         }
 
         switch (getCurrentState()) {

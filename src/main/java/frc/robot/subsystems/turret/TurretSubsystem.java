@@ -169,7 +169,7 @@ public class TurretSubsystem extends SubsystemStateMachine<frc.robot.subsystems.
 
         // Safety Check as the desired state should only ever IDLE, HOMING, STOWED, READY, or MANUAL
         if (getDesiredState() == TurretState.AIMING) {
-            requestDesiredState(TurretState.IDLE, 10);
+            requestDesiredState(TurretState.IDLE, 4);
         }
 
         switch (getCurrentState()) {
