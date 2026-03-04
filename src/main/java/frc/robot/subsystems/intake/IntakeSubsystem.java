@@ -12,13 +12,15 @@ public class IntakeSubsystem extends SubsystemStateMachine<frc.robot.subsystems.
     private final IntakeIO io;
 
     public IntakeSubsystem(IntakeIO io) {
-        super(IntakeState.IDLE);
+        super(IntakeState.IDLE, IntakeState.IDLE);
 
         this.io = io;
     }
 
     @Override
     public void periodic() {
+        updateDesiredState();
+
         switch (getCurrentState()) {
             case IDLE:
                 if (getDesiredState() == IntakeState.READY_REVERSE) {

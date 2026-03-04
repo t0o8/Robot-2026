@@ -75,7 +75,7 @@ public class TurretSubsystem extends SubsystemStateMachine<frc.robot.subsystems.
     private double turretManualPitchVoltage = 0;
 
     public TurretSubsystem(TurretIO io) {
-        super(TurretState.IDLE);
+        super(TurretState.IDLE, TurretState.IDLE);
 
         this.io = io;
     }
@@ -161,13 +161,15 @@ public class TurretSubsystem extends SubsystemStateMachine<frc.robot.subsystems.
 
     @Override
     public void periodic() {
+        updateDesiredState();
+
         if (RobotContainer.calculationSubsystem.getZone() == Zone.TRENCH) {
-            setDesiredState(TurretState.STOWED);
+            requestDesiredState(TurretState.STOWED, 30);
         }
 
         // Safety Check as the desired state should only ever IDLE, HOMING, STOWED, READY, or MANUAL
         if (getDesiredState() == TurretState.AIMING) {
-            setDesiredState(TurretState.IDLE);
+            requestDesiredState(TurretState.IDLE, 10);
         }
 
         switch (getCurrentState()) {

@@ -26,7 +26,7 @@ public class LightSubsystem extends SubsystemStateMachine<frc.robot.subsystems.l
     private final AddressableLEDBuffer ledBuffer = new AddressableLEDBuffer(Constants.LightConstants.LIGHT_LENGTH);
     
     public LightSubsystem() {
-        super(LightState.OFF);
+        super(LightState.OFF, null);
 
         ledStrip.setLength(Constants.LightConstants.LIGHT_LENGTH);
         ledStrip.start();
@@ -34,6 +34,8 @@ public class LightSubsystem extends SubsystemStateMachine<frc.robot.subsystems.l
 
     @Override
     public void periodic() {
+        updateDesiredState();
+        
         switch (getCurrentState()) {
             case OFF:
                 transitionTo(getDesiredState());

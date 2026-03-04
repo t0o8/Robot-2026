@@ -19,16 +19,18 @@ public class IntakeDeploymentSubsystem extends SubsystemStateMachine<frc.robot.s
     private final IntakeDeploymentIO io;
 
     public IntakeDeploymentSubsystem(IntakeDeploymentIO io) {
-        super(IntakeDeploymentState.UNKNOWN);
+        super(IntakeDeploymentState.UNKNOWN, null);
 
         this.io = io;
     }
 
     @Override
     public void periodic() {
+        updateDesiredState();
+
         // Safety Check as the desired state should only ever RETRACTED, OR DEPLOYED
         if (getDesiredState() == IntakeDeploymentState.UNKNOWN || getDesiredState() == IntakeDeploymentState.RETRACTING || getDesiredState() == IntakeDeploymentState.DEPLOYING) {
-            setDesiredState(IntakeDeploymentState.RETRACTED);
+            requestDesiredState(IntakeDeploymentState.RETRACTED, 10);
         }
 
         switch (getCurrentState()) {

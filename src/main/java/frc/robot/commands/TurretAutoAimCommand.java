@@ -34,7 +34,7 @@ public class TurretAutoAimCommand extends Command {
         TargetSolution targetSolution = RobotContainer.calculationSubsystem.getTargetSolution();
         if (targetSolution.errorCode() == TargetErrorCode.NONE) {
 
-            RobotContainer.turretSubsystem.setDesiredState(TurretState.READY);
+            RobotContainer.turretSubsystem.requestDesiredState(TurretState.READY, 10);
             Angle robotRelativeAngle = RobotContainer.turretSubsystem.getTurretPointAngle(targetSolution.launchYaw());
             RobotContainer.turretSubsystem.setTurretYaw(robotRelativeAngle);
 
@@ -55,6 +55,6 @@ public class TurretAutoAimCommand extends Command {
 
     @Override
     public void end(boolean interrupted) {
-        
+        RobotContainer.turretSubsystem.requestDesiredState(TurretState.IDLE, 0);
     }
 }

@@ -10,11 +10,29 @@ public abstract class SubsystemStateMachine<E extends Enum<E>> extends Subsystem
 
     protected E overrideState;
 
+    protected E defaultState;
+
+    protected int pendingPriority = -1;
+    protected E pendingState;
+
     protected final Timer stateTimer = new Timer();
 
-    public SubsystemStateMachine(E startingState) {
+    /**
+     * 
+     * @param startingState The state to start the statemachine in
+     * @param defaultState The state to transition to if no state requests have been made in a tick. If null then it will stay on the last desired state.
+     */
+    public SubsystemStateMachine(E startingState, E defaultState) {
         this.currentState = startingState;
         this.desiredState = startingState;
+
+        this.defaultState = defaultState;
+
+        if (this.defaultState != null) {
+            this.pendingState = this.defaultState;
+        } else {
+            this.pendingState = startingState;
+        }
 
         this.stateTimer.restart();
     }
@@ -23,8 +41,23 @@ public abstract class SubsystemStateMachine<E extends Enum<E>> extends Subsystem
         return currentState;
     }
 
-    public void setDesiredState(E newState) {
-        this.desiredState = newState;
+    /**
+     * Requests the state machine transitions to a new desired state
+     * 
+     * @param newState The new state to transfer to
+     * @param priority An int representing the priority of the state change. Priorities should generally follow this format:
+     * <ul>
+     *      <li>0: Idle state</li>
+     *      <li>1-10: Normal commands</li>
+     *      <li>11-20: Manual overrides</li>
+     *      <li>21-30: Safety overrides</li>
+     * </ul>
+     */
+    public void requestDesiredState(E newState, int priority) {
+        if (priority >= pendingPriority) {
+            this.pendingPriority = priority;
+            this.pendingState = newState;
+        }
     }
 
     public E getDesiredState() {
@@ -59,7 +92,7 @@ public abstract class SubsystemStateMachine<E extends Enum<E>> extends Subsystem
      * Transitions the current state to the desired state
      **/
     protected void transitionTo() {
-        transitionTo(this.desiredState);
+        transitionTo(getDesiredState());
     }
 
     /**
@@ -77,5 +110,16 @@ public abstract class SubsystemStateMachine<E extends Enum<E>> extends Subsystem
             
             this.stateTimer.restart();
         }
+    }
+
+    /**
+     * MUST BE CALLED AT THE START OF EVERY PERIODIC LOOP
+     **/
+    protected void updateDesiredState() {
+        if (pendingState != null) {
+            this.desiredState = this.pendingState;
+        }
+        this.pendingPriority = -1;
+        this.pendingState = this.defaultState;
     }
 }

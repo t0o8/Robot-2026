@@ -14,13 +14,15 @@ public class SpindexerSubsystem extends SubsystemStateMachine<frc.robot.subsyste
     private final SpindexerIO io;
 
     public SpindexerSubsystem(SpindexerIO io) {
-        super(SpindexerState.IDLE);
+        super(SpindexerState.IDLE, SpindexerState.IDLE);
 
         this.io = io;
     }
 
     @Override
     public void periodic() {
+        updateDesiredState();
+
         switch (getCurrentState()) {
             case IDLE:
                 if (getDesiredState() == SpindexerState.READY_REVERSE) {

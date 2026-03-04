@@ -22,13 +22,15 @@ public class KickerSubsystem extends SubsystemStateMachine<frc.robot.subsystems.
     private final KickerIO io;
 
     public KickerSubsystem(KickerIO io) {
-        super(KickerState.IDLE);
+        super(KickerState.IDLE, KickerState.IDLE);
 
         this.io = io;
     }
 
     @Override
     public void periodic() {
+        updateDesiredState();
+        
         switch (getCurrentState()) {
             case IDLE:
                 if (getDesiredState() == KickerState.READY_REVERSE) {

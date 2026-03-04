@@ -43,7 +43,7 @@ public class ShooterSubsystem extends SubsystemStateMachine<frc.robot.subsystems
     private double shooterPrevSetpointVelocity = 0;
 
     public ShooterSubsystem(ShooterIO io) {
-        super(ShooterState.IDLE);
+        super(ShooterState.IDLE, ShooterState.IDLE);
 
         this.io = io;
     }
@@ -88,9 +88,11 @@ public class ShooterSubsystem extends SubsystemStateMachine<frc.robot.subsystems
 
     @Override
     public void periodic() {
+        updateDesiredState();
+
         // Safety Check as the desired state should only ever IDLE or READY
         if (getDesiredState() == ShooterState.SPOOLING) {
-            setDesiredState(ShooterState.IDLE);
+            requestDesiredState(ShooterState.IDLE, 10);
         }
         
         
