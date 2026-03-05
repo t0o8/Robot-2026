@@ -33,7 +33,7 @@ import edu.wpi.first.wpilibj.util.Color;
 
 public final class Constants {
     public static class SwerveConstants {
-        public static final boolean ENABLED = true;
+        public static final boolean ENABLED = false;
         
         public static final File SWERVE_DIRECTORY = new File(Filesystem.getDeployDirectory(), "swerve"); // File with swerve configs
         public static final LinearVelocity MAX_SPEED = MetersPerSecond.of(10); // Maximum speed the swerve drive can go
@@ -47,17 +47,17 @@ public final class Constants {
     public final class TurretConstants {
         public static final boolean ENABLED = true;
 
-        public static final int TURRET_YAW_MOTOR_ID = 10;
+        public static final int TURRET_YAW_MOTOR_ID = 56;
         public static final boolean TURRET_YAW_MOTOR_INVERTED = false;
         public static final boolean TURRET_YAW_ENCODER_INVERTED = false;
         public static final double TURRET_YAW_GEAR_RATIO = 142.0 / 13.0; // Rotations of the motor for one rotation of the turret
-        public static final double TURRET_YAW_P = 0;
+        public static final double TURRET_YAW_P = 10;
         public static final double TURRET_YAW_I = 0;
         public static final double TURRET_YAW_D = 0;
-        public static final Voltage TURRET_YAW_S = Volts.of(0);
-        public static final double TURRET_YAW_V = 0; // Unit is V/(rad/s)
-        public static final double TURRET_YAW_A = 0; // Unit is V/(rad/s^2)
-        public static final AngularVelocity TURRET_YAW_MAX_VELOCITY = DegreesPerSecond.of(10);
+        public static final Voltage TURRET_YAW_S = Volts.of(0.1);
+        public static final double TURRET_YAW_V = 2; // Unit is V/(rad/s)
+        public static final double TURRET_YAW_A = 2; // Unit is V/(rad/s^2)
+        public static final AngularVelocity TURRET_YAW_MAX_VELOCITY = DegreesPerSecond.of(40);
         public static final AngularAcceleration TURRET_YAW_MAX_ACCELERATION = DegreesPerSecondPerSecond.of(10);
 
         public static final int TURRET_PITCH_MOTOR_ID = 11;
@@ -123,7 +123,7 @@ public final class Constants {
     }
 
     public final class KickerConstants {
-        public static final boolean ENABLED = true;
+        public static final boolean ENABLED = false;
         public static final int KICKER_MOTOR_ID = 28;
         public static final boolean KICKER_MOTOR_INVERTED = false;
     }

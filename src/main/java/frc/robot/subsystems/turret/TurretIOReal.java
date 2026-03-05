@@ -18,18 +18,18 @@ public class TurretIOReal implements TurretIO {
     private final RelativeEncoder turretYawEncoder;
     private final SparkMaxConfig turretYawConfig;
 
-    
+    /*
     private SparkMax turretPitchMotor;
     private RelativeEncoder turretPitchEncoder;
     private SparkMaxConfig turretPitchConfig;
-    
+    */
 
     public TurretIOReal() {
         turretYawMotor = new SparkMax(Constants.TurretConstants.TURRET_YAW_MOTOR_ID, MotorType.kBrushless);
-        turretPitchMotor = new SparkMax(Constants.TurretConstants.TURRET_PITCH_MOTOR_ID, MotorType.kBrushless);
+        //turretPitchMotor = new SparkMax(Constants.TurretConstants.TURRET_PITCH_MOTOR_ID, MotorType.kBrushless);
 
         turretYawEncoder = turretYawMotor.getEncoder();
-        turretPitchEncoder = turretPitchMotor.getEncoder();
+        //turretPitchEncoder = turretPitchMotor.getEncoder();
 
         // Configure motors
         turretYawConfig = new SparkMaxConfig();
@@ -39,7 +39,7 @@ public class TurretIOReal implements TurretIO {
         turretYawConfig.encoder.velocityConversionFactor(yawConversionFactor / 60.0);
         turretYawMotor.configure(turretYawConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
 
-        
+        /*
         turretPitchConfig = new SparkMaxConfig();
         turretPitchConfig.inverted(Constants.TurretConstants.TURRET_PITCH_MOTOR_INVERTED);
         double pitchConversionFactor = (2.0 * Math.PI) / Constants.TurretConstants.TURRET_PITCH_GEAR_RATIO;
@@ -47,7 +47,7 @@ public class TurretIOReal implements TurretIO {
         turretPitchConfig.encoder.velocityConversionFactor(pitchConversionFactor / 60.0);
         turretPitchConfig.encoder.inverted(Constants.TurretConstants.TURRET_PITCH_ENCODER_INVERTED);
         turretPitchMotor.configure(turretPitchConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
-        
+        */
     }
 
     @Override
@@ -58,7 +58,7 @@ public class TurretIOReal implements TurretIO {
     
     @Override
     public void setPitchMotorVoltage(double voltage) {
-        turretPitchMotor.setVoltage(voltage);
+        //turretPitchMotor.setVoltage(voltage);
     }
     
 
@@ -70,7 +70,8 @@ public class TurretIOReal implements TurretIO {
     
     @Override
     public double getPitchRadians() {
-        return (Constants.TurretConstants.TURRET_PITCH_UPPER_LIMIT.in(Radian) - turretPitchEncoder.getPosition());
+        return 0.5;
+        //return (Constants.TurretConstants.TURRET_PITCH_UPPER_LIMIT.in(Radian) - turretPitchEncoder.getPosition());
     }
     
 }

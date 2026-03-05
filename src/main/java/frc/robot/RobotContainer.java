@@ -80,7 +80,7 @@ public class RobotContainer {
 
 	public static final CommandXboxController driverController = new CommandXboxController(Constants.OperatorConstants.DRIVER_CONTROLLER_PORT);
 	
-	private final SendableChooser<Command> autoChooser;
+	private static SendableChooser<Command> autoChooser;
 
 	// Transforms controller input into swerve drive speeds
 	public static Supplier<ChassisSpeeds> driveAngularVelocity;
@@ -105,17 +105,18 @@ public class RobotContainer {
 		}
 
 		if (Constants.TurretConstants.ENABLED) {
-			turretAutoAimCommand = new TurretAutoAimCommand();
+			turretAutoAimCommand = new ManualAimCommand();
 		}
 
 		registerCommands();
 
 		configureBindings();
 
-		autoChooser = AutoBuilder.buildAutoChooser();
+		if (Constants.SwerveConstants.ENABLED) {
+			autoChooser = AutoBuilder.buildAutoChooser();
 
-		SmartDashboard.putData("Auto Chooser", autoChooser);
-
+			SmartDashboard.putData("Auto Chooser", autoChooser);
+		}
 
 
 		//DO SANITY CHECKS OF THE MAGNUS EFFECT
@@ -164,7 +165,7 @@ public class RobotContainer {
 			swerveSubsystem.setDefaultCommand(driveFieldOrientedAngularVelocity);
 		}
 
-		turretSubsystem.setDefaultCommand(new TurretAutoAimCommand());
+		turretSubsystem.setDefaultCommand(turretAutoAimCommand);
 	}
 	
 
@@ -174,6 +175,9 @@ public class RobotContainer {
     }
 
 	public Command getAutonomousCommand() {
+		if (Constants.SwerveConstants.ENABLED == false) {
+			return Commands.run(() -> {});
+		}
 		return autoChooser.getSelected();
 	}
 
@@ -187,6 +191,6 @@ public class RobotContainer {
 		Pose2d botPose = swerveSubsystem.getPose2d();
 
 		calculationSubsystem.updateBotZone(botPose);
-		calculationSubsystem.updateTrajectoryCalculations(botPose);
+		//calculationSubsystem.updateTrajectoryCalculations(botPose);
 	}
 }
