@@ -7,6 +7,7 @@ import com.revrobotics.spark.SparkMax;
 import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 import com.revrobotics.spark.config.SparkMaxConfig;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.libraries.SubsystemStateMachine;
@@ -68,5 +69,8 @@ public class KickerSubsystem extends SubsystemStateMachine<frc.robot.subsystems.
                 io.setMotorVoltage(12);
                 break;
         }
+
+        SmartDashboard.putString("Kicker/Current State", getCurrentState().name());
+        SmartDashboard.putString("Kicker/Desired State", getDesiredState().name());
     }
 }

@@ -1,5 +1,7 @@
 package frc.robot.subsystems.turret;
 
+import static edu.wpi.first.units.Units.Radian;
+
 import com.revrobotics.AbsoluteEncoder;
 import com.revrobotics.PersistMode;
 import com.revrobotics.RelativeEncoder;
@@ -18,7 +20,7 @@ public class TurretIOReal implements TurretIO {
 
     
     private SparkMax turretPitchMotor;
-    private AbsoluteEncoder turretPitchAbsoluteEncoder;
+    private RelativeEncoder turretPitchEncoder;
     private SparkMaxConfig turretPitchConfig;
     
 
@@ -27,7 +29,7 @@ public class TurretIOReal implements TurretIO {
         turretPitchMotor = new SparkMax(Constants.TurretConstants.TURRET_PITCH_MOTOR_ID, MotorType.kBrushless);
 
         turretYawEncoder = turretYawMotor.getEncoder();
-        turretPitchAbsoluteEncoder = turretPitchMotor.getAbsoluteEncoder();
+        turretPitchEncoder = turretPitchMotor.getEncoder();
 
         // Configure motors
         turretYawConfig = new SparkMaxConfig();
@@ -40,11 +42,10 @@ public class TurretIOReal implements TurretIO {
         
         turretPitchConfig = new SparkMaxConfig();
         turretPitchConfig.inverted(Constants.TurretConstants.TURRET_PITCH_MOTOR_INVERTED);
-        double pitchConversionFactor = (2.0 * Math.PI);
-        turretPitchConfig.absoluteEncoder.positionConversionFactor(pitchConversionFactor);
-        turretPitchConfig.absoluteEncoder.velocityConversionFactor(pitchConversionFactor / 60.0);
-        turretPitchConfig.absoluteEncoder.inverted(Constants.TurretConstants.TURRET_PITCH_ENCODER_INVERTED);
-        turretPitchConfig.absoluteEncoder.zeroOffset(Constants.TurretConstants.TURRET_PITCH_ZERO_OFFSET);
+        double pitchConversionFactor = (2.0 * Math.PI) / Constants.TurretConstants.TURRET_PITCH_GEAR_RATIO;
+        turretPitchConfig.encoder.positionConversionFactor(pitchConversionFactor);
+        turretPitchConfig.encoder.velocityConversionFactor(pitchConversionFactor / 60.0);
+        turretPitchConfig.encoder.inverted(Constants.TurretConstants.TURRET_PITCH_ENCODER_INVERTED);
         turretPitchMotor.configure(turretPitchConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
         
     }
@@ -69,7 +70,7 @@ public class TurretIOReal implements TurretIO {
     
     @Override
     public double getPitchRadians() {
-        return turretPitchAbsoluteEncoder.getPosition();
+        return (Constants.TurretConstants.TURRET_PITCH_UPPER_LIMIT.in(Radian) - turretPitchEncoder.getPosition());
     }
     
 }

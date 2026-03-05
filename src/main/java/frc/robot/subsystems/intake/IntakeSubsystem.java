@@ -12,7 +12,7 @@ public class IntakeSubsystem extends SubsystemStateMachine<frc.robot.subsystems.
     private final IntakeIO io;
 
     public IntakeSubsystem(IntakeIO io) {
-        super(IntakeState.IDLE, IntakeState.IDLE);
+        super(IntakeState.IDLE, null);
 
         this.io = io;
     }

@@ -63,6 +63,7 @@ public final class Constants {
         public static final int TURRET_PITCH_MOTOR_ID = 11;
         public static final boolean TURRET_PITCH_MOTOR_INVERTED = false;
         public static final boolean TURRET_PITCH_ENCODER_INVERTED = false;
+        public static final double TURRET_PITCH_GEAR_RATIO = 160.0 / 14.0; // Rotations of the motor for one rotation of the pitch
         public static final double TURRET_PITCH_ZERO_OFFSET = 0;
         public static final double TURRET_PITCH_P = 0;
         public static final double TURRET_PITCH_I = 0;

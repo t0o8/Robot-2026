@@ -165,8 +165,6 @@ public class RobotContainer {
 		}
 
 		turretSubsystem.setDefaultCommand(new TurretAutoAimCommand());
-
-
 	}
 	
 
