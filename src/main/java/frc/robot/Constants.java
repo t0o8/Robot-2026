@@ -122,7 +122,7 @@ public final class Constants {
     }
 
     public final class KickerConstants {
-        public static final boolean ENABLED = false;
+        public static final boolean ENABLED = true;
         public static final int KICKER_MOTOR_ID = 28;
         public static final boolean KICKER_MOTOR_INVERTED = false;
     }

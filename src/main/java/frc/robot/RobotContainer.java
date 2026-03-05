@@ -64,7 +64,7 @@ public class RobotContainer {
 		Constants.TurretConstants.ENABLED ? new TurretIOReal() : new TurretIO() {}
 	);
 	public static final KickerSubsystem kickerSubsystem = new KickerSubsystem(
-		Constants.ShooterConstants.ENABLED ? new KickerIOReal() : new KickerIO() {}
+		Constants.KickerConstants.ENABLED ? new KickerIOReal() : new KickerIO() {}
 	);
 	public static final IntakeSubsystem intakeSubsystem = new IntakeSubsystem(
 		Constants.IntakeConstants.ENABLED ? new IntakeIOReal() : new IntakeIO() {}
