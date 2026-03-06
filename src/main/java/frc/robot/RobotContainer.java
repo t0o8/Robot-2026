@@ -26,6 +26,7 @@ import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.commands.intake.DeployIntakeCommand;
 import frc.robot.commands.intake.RetractIntakeCommand;
 import frc.robot.commands.kicker.ActivateKickerCommand;
+import frc.robot.commands.turret.HomeTurretCommand;
 import frc.robot.commands.turret.ManualAimCommand;
 import frc.robot.commands.turret.ManualAimVotageCommand;
 import frc.robot.commands.turret.TurretAutoAimCommand;
@@ -115,9 +116,13 @@ public class RobotContainer {
 
 		if (Constants.SwerveConstants.ENABLED) {
 			autoChooser = AutoBuilder.buildAutoChooser();
-
-			SmartDashboard.putData("Auto Chooser", autoChooser);
+		} else {
+			autoChooser = new SendableChooser<Command>();
 		}
+
+		autoChooser.addOption("HomeTurretCommand", new HomeTurretCommand());
+
+		SmartDashboard.putData("Auto Chooser", autoChooser);
 
 
 		//DO SANITY CHECKS OF THE MAGNUS EFFECT
