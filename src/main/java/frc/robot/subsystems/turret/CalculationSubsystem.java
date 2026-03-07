@@ -1,7 +1,12 @@
 package frc.robot.subsystems.turret;
 
+import static edu.wpi.first.units.Units.Degree;
 import static edu.wpi.first.units.Units.DegreesPerSecond;
 import static edu.wpi.first.units.Units.Meter;
+import static edu.wpi.first.units.Units.MetersPerSecond;
+import static edu.wpi.first.units.Units.Second;
+
+import java.util.concurrent.atomic.AtomicReference;
 
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Translation2d;
@@ -9,13 +14,17 @@ import edu.wpi.first.math.geometry.Translation3d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.units.measure.Angle;
 import edu.wpi.first.units.measure.AngularVelocity;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.RobotContainer;
 import frc.robot.libraries.FieldHelpers;
 import frc.robot.libraries.PoseHelpers;
+import frc.robot.libraries.ProjectileSimulation;
+import frc.robot.libraries.ProjectileSimulation.TargetDebug;
 import frc.robot.libraries.ProjectileSimulation.TargetErrorCode;
+import frc.robot.libraries.ProjectileSimulation.TargetInput;
 import frc.robot.libraries.ProjectileSimulation.TargetSolution;
 
 public class CalculationSubsystem {
@@ -30,7 +39,6 @@ public class CalculationSubsystem {
 
     private Translation3d hubPosition = new Translation3d();
     private Translation3d[] passPosition = new Translation3d[] {new Translation3d(), new Translation3d()};
-    private TargetSolution targetSolution;
 
     private Translation2d[] allianceZone = new Translation2d[] {new Translation2d(), new Translation2d()};
 
@@ -38,8 +46,20 @@ public class CalculationSubsystem {
 
     private Translation3d targetPosition = new Translation3d();
 
+    private final AtomicReference<TargetInput> targetInputs;
+    private final AtomicReference<TargetSolution> targetSolutions;
+
+	private final ProjectileSimulation projectileInstance = new ProjectileSimulation();
+
+    private Thread projectileThread;
+
     public CalculationSubsystem() {
-        
+        targetInputs = new AtomicReference<>(new TargetInput(MetersPerSecond.of(1), DegreesPerSecond.of(0), new Translation2d(), new Translation3d(), 1, 1));
+        targetSolutions = new AtomicReference<>(new TargetSolution(TargetErrorCode.IDEAL_PITCH, MetersPerSecond.of(10), Degree.of(0), Degree.of(0), Second.of(0), new TargetDebug(0, 0, 0)));
+    }
+
+    public ProjectileSimulation getProjectileSimulation() {
+        return projectileInstance;
     }
 
     public void updateAimingPositions() {
@@ -113,7 +133,6 @@ public class CalculationSubsystem {
     }
 
     public void updateTrajectoryCalculations(Pose2d botPose) {
-
         
         switch (botZone) {
             case ALLIANCE:
@@ -138,8 +157,8 @@ public class CalculationSubsystem {
 
         ChassisSpeeds fieldSpeeds = RobotContainer.swerveSubsystem.getFieldChassisSpeeds();
 
-        TargetSolution solution = RobotContainer.projectileSimulation.calculateLaunchAngleSimulation(
-            RobotContainer.projectileSimulation.convertShooterSpeedToVelocity(Constants.ShooterConstants.SHOOTER_MAX_VELOCITY, Constants.ShooterConstants.SHOOTER_WHEEL_RADIUS, 0.5),
+        setTargetInputs(new TargetInput(
+            getProjectileSimulation().convertShooterSpeedToVelocity(Constants.ShooterConstants.SHOOTER_MAX_VELOCITY, Constants.ShooterConstants.SHOOTER_WHEEL_RADIUS, 0.5),
             DegreesPerSecond.of(0),
             new Translation2d(
                 fieldSpeeds.vxMetersPerSecond,
@@ -148,18 +167,60 @@ public class CalculationSubsystem {
             robotTargetRelative,
             Constants.FuelPhysicsConstants.MAX_STEPS,
             Constants.FuelPhysicsConstants.TPS
-        );
+        ));
+
+        TargetSolution lastSolution = getTargetSolutions();
 
         SmartDashboard.putNumberArray("Auto Aim/Target Position", PoseHelpers.convertTranslationToNumbers(targetPosition));
-        SmartDashboard.putString("Auto Aim/Error Code", solution.errorCode().name());
-        SmartDashboard.putString("Auto Aim/Solution Debug", solution.targetDebug().toString());
-        SmartDashboard.putBoolean("Auto Aim/Error", solution.errorCode() != TargetErrorCode.NONE);
+        SmartDashboard.putString("Auto Aim/Error Code", lastSolution.errorCode().name());
+        SmartDashboard.putString("Auto Aim/Solution Debug", lastSolution.targetDebug().toString());
+        SmartDashboard.putBoolean("Auto Aim/Error", lastSolution.errorCode() != TargetErrorCode.NONE);
+    }
 
-        if (solution.errorCode() == TargetErrorCode.NONE) {
-            targetSolution = solution;
-        }
+    public void setTargetInputs(TargetInput targetInput) {
+        targetInputs.set(targetInput);
+    }
 
+    public TargetInput getTargetInputs() {
+        return targetInputs.get();
+    }
 
+    public void setTargetSolutions(TargetSolution targetSolution) {
+        targetSolutions.set(targetSolution);
+    }
+
+    public TargetSolution getTargetSolutions() {
+        return targetSolutions.get();
+    }
+
+    public void startPhysicsSimulation() {
+         projectileThread = new Thread(() -> {
+
+            ProjectileSimulation projectileSimulationInstance = RobotContainer.calculationSubsystem.getProjectileSimulation();
+
+            while (!Thread.currentThread().isInterrupted()) {
+                double startTime = Timer.getFPGATimestamp();
+
+                TargetInput targetInput = RobotContainer.calculationSubsystem.getTargetInputs();
+
+                TargetSolution solution = projectileSimulationInstance.calculateLaunchAngleSimulation(targetInput);
+                
+                RobotContainer.calculationSubsystem.setTargetSolutions(solution);
+
+                double elapsedTime = Timer.getFPGATimestamp() - startTime;
+                long sleepTimeMs = Math.max(0, 20 - (long)(elapsedTime * 1000));
+                
+                try {
+                    Thread.sleep(sleepTimeMs);
+                } catch (InterruptedException e) {
+                    Thread.currentThread().interrupt();
+                    break;
+                }
+            }
+        });
+        projectileThread.setDaemon(true);
+        projectileThread.setName("Projectile Simulation Thread");
+        projectileThread.start();
     }
 
     public Zone getZone() {
@@ -168,9 +229,5 @@ public class CalculationSubsystem {
 
     public Translation3d getTargetPosition() {
         return targetPosition;
-    }
-
-    public TargetSolution getTargetSolution() {
-        return targetSolution;
     }
 }

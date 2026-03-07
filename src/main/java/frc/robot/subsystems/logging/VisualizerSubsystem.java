@@ -39,7 +39,7 @@ public class VisualizerSubsystem extends SubsystemBase {
                 targetPosition.getZ()
             );
             
-            LinearVelocity launchSpeed = RobotContainer.projectileSimulation.convertShooterSpeedToVelocity(
+            LinearVelocity launchSpeed = RobotContainer.calculationSubsystem.getProjectileSimulation().convertShooterSpeedToVelocity(
                 RobotContainer.shooterSubsystem.getTargetSpeed(),
                 Constants.ShooterConstants.SHOOTER_WHEEL_RADIUS,
                 0.5
@@ -51,11 +51,11 @@ public class VisualizerSubsystem extends SubsystemBase {
 
             ChassisSpeeds fieldSpeeds = RobotContainer.swerveSubsystem.getFieldChassisSpeeds();
 
-            Double[] positionHistory = RobotContainer.projectileSimulation.simulateLaunch(
+            Double[] positionHistory = RobotContainer.calculationSubsystem.getProjectileSimulation().simulateLaunch(
                 launchSpeed,
                 RobotContainer.turretSubsystem.getTurretTargetPitch(),
                 launchYaw,
-                RadiansPerSecond.of(-(launchSpeed.in(MetersPerSecond) / RobotContainer.projectileSimulation.projectileRadius)),
+                RadiansPerSecond.of(-(launchSpeed.in(MetersPerSecond) / RobotContainer.calculationSubsystem.getProjectileSimulation().projectileRadius)),
                 RadiansPerSecond.of(0), 
                 new Translation2d(
                     fieldSpeeds.vxMetersPerSecond,

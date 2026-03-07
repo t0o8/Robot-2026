@@ -86,6 +86,15 @@ public class ProjectileSimulation {
         TargetDebug targetDebug
     ) {};
 
+    public record TargetInput (
+        LinearVelocity startLaunchSpeed,
+        AngularVelocity launchAngularYaw,
+        Translation2d robotVelocity,
+        Translation3d targetPosition,
+        int maxSteps, 
+        int tps
+    ) {};
+
     /**
      * Calculates the launch pitch needed to reach a target not accounting for drag.
      * 
@@ -424,6 +433,17 @@ public class ProjectileSimulation {
 
         return MetersPerSecond.of(
             MathUtil.interpolate(speedLimitUpper.in(MetersPerSecond) * 0.3, speedLimitUpper.in(MetersPerSecond), percent)
+        );
+    }
+
+    public TargetSolution calculateLaunchAngleSimulation(TargetInput targetInput) {
+        return calculateLaunchAngleSimulation(
+            targetInput.startLaunchSpeed,
+            targetInput.launchAngularYaw,
+            targetInput.robotVelocity,
+            targetInput.targetPosition,
+            targetInput.maxSteps,
+            targetInput.tps
         );
     }
 

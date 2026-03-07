@@ -35,7 +35,7 @@ public class TurretAutoAimCommand extends Command {
         RobotContainer.turretSubsystem.requestDesiredState(TurretState.READY, 5);
         RobotContainer.shooterSubsystem.requestDesiredState(ShooterState.READY, 5);
 
-        TargetSolution targetSolution = RobotContainer.calculationSubsystem.getTargetSolution();
+        TargetSolution targetSolution = RobotContainer.calculationSubsystem.getTargetSolutions();
         if (targetSolution.errorCode() == TargetErrorCode.NONE) {
 
 
@@ -44,7 +44,7 @@ public class TurretAutoAimCommand extends Command {
 
             RobotContainer.turretSubsystem.setTurretPitch(targetSolution.launchPitch());
 
-            AngularVelocity shooterSpeed = RobotContainer.projectileSimulation.convertVelocityToShooterSpeed(targetSolution.launchSpeed(), Constants.ShooterConstants.SHOOTER_WHEEL_RADIUS, 0.5);
+            AngularVelocity shooterSpeed = RobotContainer.calculationSubsystem.getProjectileSimulation().convertVelocityToShooterSpeed(targetSolution.launchSpeed(), Constants.ShooterConstants.SHOOTER_WHEEL_RADIUS, 0.5);
 
             RobotContainer.shooterSubsystem.setTargetSpeed(shooterSpeed);
         }

@@ -45,7 +45,7 @@ public final class Constants {
     }
 
     public final class TurretConstants {
-        public static final boolean ENABLED = true;
+        public static final boolean ENABLED = false;
 
         public static final int TURRET_YAW_MOTOR_ID = 56;
         public static final boolean TURRET_YAW_MOTOR_INVERTED = false;
@@ -157,7 +157,7 @@ public final class Constants {
     }
 
     public final class FuelPhysicsConstants {
-        public static final int TPS = 60;
+        public static final int TPS = 20;
         public static final int MAX_STEPS = 15;
         public static final double DRAG_CONSTANT = 0.5;
         public static final double ROT_DRAG_CONSTANT = 0.05;

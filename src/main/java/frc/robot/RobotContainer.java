@@ -75,7 +75,6 @@ public class RobotContainer {
 		Constants.IntakeConstants.ENABLED ? new IntakeDeploymentIOReal() : new IntakeDeploymentIO() {}
 	);
 	public static final LimelightSubsystem limelightSubsystem = new LimelightSubsystem();
-	public static final ProjectileSimulation projectileSimulation = new ProjectileSimulation();
 	public static final VisualizerSubsystem visualizerSubsystem = new VisualizerSubsystem();
 	public static final LightSubsystem lightSubsystem = new LightSubsystem();
 	public static final CalculationSubsystem calculationSubsystem = new CalculationSubsystem();
@@ -120,7 +119,7 @@ public class RobotContainer {
 			autoChooser = new SendableChooser<Command>();
 		}
 
-		autoChooser.addOption("HomeTurretCommand", new HomeTurretCommand());
+		autoChooser.addOption("Home Turret Command", new HomeTurretCommand());
 
 		SmartDashboard.putData("Auto Chooser", autoChooser);
 
@@ -181,9 +180,6 @@ public class RobotContainer {
     }
 
 	public Command getAutonomousCommand() {
-		if (Constants.SwerveConstants.ENABLED == false) {
-			return Commands.run(() -> {});
-		}
 		return autoChooser.getSelected();
 	}
 
@@ -191,12 +187,15 @@ public class RobotContainer {
 		shooterSubsystem.resetShooter();
 
 		calculationSubsystem.updateAimingPositions();
+
+		calculationSubsystem.startPhysicsSimulation();
 	}
 
 	public void periodic() {
 		Pose2d botPose = swerveSubsystem.getPose2d();
 
 		calculationSubsystem.updateBotZone(botPose);
-		//calculationSubsystem.updateTrajectoryCalculations(botPose);
+		calculationSubsystem.updateTrajectoryCalculations(botPose);
+		System.out.println(calculationSubsystem.getTargetSolutions());
 	}
 }
