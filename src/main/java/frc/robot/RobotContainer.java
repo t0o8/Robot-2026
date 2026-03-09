@@ -23,6 +23,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
+import frc.robot.commands.climb.ClimbCommand;
 import frc.robot.commands.intake.DeployIntakeCommand;
 import frc.robot.commands.intake.RetractIntakeCommand;
 import frc.robot.commands.kicker.ActivateKickerCommand;
@@ -171,6 +172,8 @@ public class RobotContainer {
 		NamedCommands.registerCommand("DeployIntakeCommand", new DeployIntakeCommand());
 
 		NamedCommands.registerCommand("ActivateKickerCommand", new ActivateKickerCommand());
+
+		NamedCommands.registerCommand("ClimbCommand", new ClimbCommand());
 	}
 
 	private void configureBindings() {
