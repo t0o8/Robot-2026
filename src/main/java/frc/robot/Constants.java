@@ -36,7 +36,7 @@ public final class Constants {
         public static final boolean ENABLED = true;
         
         public static final File SWERVE_DIRECTORY = new File(Filesystem.getDeployDirectory(), "swerve"); // File with swerve configs.
-        public static final LinearVelocity MAX_SPEED = MetersPerSecond.of(10); // Maximum speed the swerve drive can go
+        public static final LinearVelocity MAX_SPEED = MetersPerSecond.of(12); // Maximum speed the swerve drive can go
         public static final Angle GYRO_OFFSET = Degree.of(0);
 
         public static final double DRIVE_P = 1;
@@ -82,8 +82,8 @@ public final class Constants {
 
         public static final Angle TURRET_PITCH_UPPER_LIMIT = Degree.of(90);
         public static final Angle TURRET_PITCH_LOWER_LIMIT = Degree.of(45);
-        public static final Angle TURRET_YAW_LOWER_LIMIT = Degree.of(-90);
-        public static final Angle TURRET_YAW_UPPER_LIMIT = Degree.of(90);
+        public static final Angle TURRET_YAW_LOWER_LIMIT = Degree.of(-70);
+        public static final Angle TURRET_YAW_UPPER_LIMIT = Degree.of(70);
         public static final Translation3d TURRET_PIVOT_OFFSET = new Translation3d(
             0,
             0,
@@ -159,7 +159,7 @@ public final class Constants {
 
         public static final int INTAKE_MOTOR_ID = 14;
         public static final boolean INTAKE_MOTOR_INVERTED = false;
-        public static final Voltage INTAKE_MOTOR_VOLTAGE = Volt.of(7.5);
+        public static final Voltage INTAKE_MOTOR_VOLTAGE = Volt.of(8);
 
         public static final int INTAKE_RETRACTED_SENSOR_DIO = 0;
         public static final int INTAKE_DEPLOYED_SENSOR_DIO = 1;

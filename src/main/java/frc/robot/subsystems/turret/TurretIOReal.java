@@ -25,11 +25,11 @@ public class TurretIOReal implements TurretIO {
     private final double relativeStepSize = (2 * Math.PI) / (Constants.TurretConstants.TURRET_YAW_COUNTS_PER_REV * Constants.TurretConstants.TURRET_YAW_GEAR_RATIO);
     private double yawAbsoluteOffset = 0;
 
-    /*
-    private SparkMax turretPitchMotor;
-    private RelativeEncoder turretPitchEncoder;
-    private SparkMaxConfig turretPitchConfig;
-    */
+    
+    //private SparkMax turretPitchMotor;
+    //private RelativeEncoder turretPitchEncoder;
+    //private SparkMaxConfig turretPitchConfig;
+    
 
     private final DigitalInput yawHomingSensor;
 
