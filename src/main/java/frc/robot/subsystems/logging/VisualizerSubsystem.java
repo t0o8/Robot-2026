@@ -18,6 +18,8 @@ import frc.robot.Robot;
 import frc.robot.RobotContainer;
 import frc.robot.libraries.FieldHelpers;
 import frc.robot.libraries.PoseHelpers;
+import frc.robot.subsystems.intake.IntakeDeploymentSubsystem.IntakeDeploymentState;
+import frc.robot.subsystems.turret.ShooterSubsystem.ShooterState;
 
 public class VisualizerSubsystem extends SubsystemBase {
     private final boolean isSimulation = Robot.isSimulation();
@@ -78,5 +80,7 @@ public class VisualizerSubsystem extends SubsystemBase {
 
             SmartDashboard.putNumberArray("Logging/Trajectory Visualizer", PoseHelpers.convertTranslationArrayToNumbers(globalPositionHistory));
         }
+        SmartDashboard.putBoolean("Shooter/Active", RobotContainer.shooterSubsystem.getDesiredState() == ShooterState.READY);
+        SmartDashboard.putBoolean("Intake Deployment/Deployed", RobotContainer.intakeDeploymentSubsystem.getDesiredState() == IntakeDeploymentState.DEPLOYED);
     }
 }

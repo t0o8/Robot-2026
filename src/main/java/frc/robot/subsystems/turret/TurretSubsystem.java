@@ -64,9 +64,8 @@ public class TurretSubsystem extends SubsystemStateMachine<frc.robot.subsystems.
             Constants.TurretConstants.TURRET_PITCH_MAX_ACCELERATION.in(RadiansPerSecondPerSecond)
         )
     );
-    private final ArmFeedforward turretPitchFF = new ArmFeedforward(
+    private final SimpleMotorFeedforward turretPitchFF = new SimpleMotorFeedforward(
         Constants.TurretConstants.TURRET_PITCH_S.in(Volts),
-        Constants.TurretConstants.TURRET_PITCH_G.in(Volts),
         Constants.TurretConstants.TURRET_PITCH_V, // Unit is V/(rad/s)
         Constants.TurretConstants.TURRET_PITCH_A // Unit is V/(rad/s^2)
     );
@@ -157,10 +156,11 @@ public class TurretSubsystem extends SubsystemStateMachine<frc.robot.subsystems.
     }
 
     private double caclulateTurretPitchVoltage() {
-        double turretPitchVoltage = turretPitchPID.calculate(io.getPitchRadians());
+        double turretPitchVoltage = turretPitchPID.calculate((Math.PI / 2.0) - io.getPitchRadians());
 
         TrapezoidProfile.State turretPitchState = turretPitchPID.getSetpoint();
-        turretPitchVoltage += turretPitchFF.calculateWithVelocities(turretPitchState.position, turretPrevPitchSetpointVelocity, turretPitchState.velocity);
+        turretPitchVoltage -= turretPitchFF.calculateWithVelocities( turretPrevPitchSetpointVelocity, turretPitchState.velocity);
+        turretPitchVoltage += Math.sin(turretPitchState.position) * Constants.TurretConstants.TURRET_PITCH_G.in(Volt);
         turretPitchVoltage = MathUtil.clamp(
             turretPitchVoltage, 
             -10.0, 
@@ -297,10 +297,10 @@ public class TurretSubsystem extends SubsystemStateMachine<frc.robot.subsystems.
                 break;
                 
             case HOMING:
-                if (getStateTimer() < 1) {
+                if (getStateTimer() < 0.5) {
                     turretYawVoltage = -0.35;
                 } else {
-                    turretYawVoltage = 0.35;
+                    turretYawVoltage = 0.28;
                     if (io.getHomingSensor()) {
                         if (!turretHomingSeenZero && !turretHomeingStartedActive) {
                             turretHomingSeenZero = true;

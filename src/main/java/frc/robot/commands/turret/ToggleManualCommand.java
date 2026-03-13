@@ -25,13 +25,12 @@ public class ToggleManualCommand extends Command {
         this.turretYawSupplier = turretYawSupplier;
         this.turretPitchSupplier = turretPitchSupplier;
 
-        addRequirements(RobotContainer.turretSubsystem, RobotContainer.shooterSubsystem);
+        addRequirements(RobotContainer.turretSubsystem);
     }
 
     @Override
     public void initialize() {
         RobotContainer.turretSubsystem.setOverrideState(TurretState.MANUAL);
-        RobotContainer.shooterSubsystem.setOverrideState(ShooterState.READY);
 
         targetYaw = RobotContainer.turretSubsystem.getTurretYaw().in(Degree);
         targetPitch = RobotContainer.turretSubsystem.getTurretPitch().in(Degree);
@@ -39,13 +38,13 @@ public class ToggleManualCommand extends Command {
 
     @Override
     public void execute() {
-        targetYaw = turretYawSupplier.getAsDouble() * 0.01;
-        targetPitch += turretPitchSupplier.getAsDouble() * 0.01;
+        targetYaw = turretYawSupplier.getAsDouble() * 0.1;
+        targetPitch += turretPitchSupplier.getAsDouble() * 0.1;
 
         targetYaw = MathUtil.clamp(targetYaw, Constants.TurretConstants.TURRET_YAW_LOWER_LIMIT.in(Degree), Constants.TurretConstants.TURRET_YAW_UPPER_LIMIT.in(Degree));
         targetPitch = MathUtil.clamp(targetPitch, Constants.TurretConstants.TURRET_PITCH_LOWER_LIMIT.in(Degree), Constants.TurretConstants.TURRET_PITCH_UPPER_LIMIT.in(Degree));
         
-        System.out.println(targetPitch);
+        
 
         RobotContainer.turretSubsystem.setOverrideAngles(
             Degree.of(targetYaw),
@@ -66,8 +65,6 @@ public class ToggleManualCommand extends Command {
     @Override
     public void end(boolean interrupted) {
         RobotContainer.turretSubsystem.setOverrideState(null);
-
-        RobotContainer.shooterSubsystem.setOverrideState(null);
         RobotContainer.shooterSubsystem.setTargetSpeed(RotationsPerSecond.of(0));
     }
 }
