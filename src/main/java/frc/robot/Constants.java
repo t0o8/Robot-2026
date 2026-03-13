@@ -95,27 +95,27 @@ public final class Constants {
     }
 
     public final class ShooterConstants {
-        public static final boolean ENABLED = false;
+        public static final boolean ENABLED = true;
 
         public static final int SHOOTER_MOTOR_1_ID = 15;
-        public static final boolean SHOOTER_MOTOR_1_INVERTED = false;
+        public static final boolean SHOOTER_MOTOR_1_INVERTED = true;
 
         public static final int SHOOTER_MOTOR_2_ID = 16;
-        public static final boolean SHOOTER_MOTOR_2_INVERTED = false;
+        public static final boolean SHOOTER_MOTOR_2_INVERTED = true;
 
         public static final double SHOOTER_GEAR_RATIO = 1; // Rotations of the motor for one rotation of the wheels
 
         public static final double SHOOTER_P = 0;
         public static final double SHOOTER_I = 0;
         public static final double SHOOTER_D = 0;
-        public static final Voltage SHOOTER_S = Volts.of(0);
-        public static final double SHOOTER_V = 0; // Unit is V/(rotations/s)
-        public static final double SHOOTER_A = 0; // Unit is V/(rotations/s^2)
+        public static final Voltage SHOOTER_S = Volts.of(0.1);
+        public static final double SHOOTER_V = 0.15; // Unit is V/(rotations/s)
+        public static final double SHOOTER_A = 0.05; // Unit is V/(rotations/s^2)
         public static final Distance SHOOTER_WHEEL_RADIUS = Inch.of(2);
         public static final AngularVelocity SHOOTER_MAX_VELOCITY = RotationsPerSecond.of(90);
         public static final AngularVelocity SHOOTER_MIN_VELOCITY = RotationsPerSecond.of(10);
-        public static final AngularAcceleration SHOOTER_MAX_ACCELERATION = RotationsPerSecondPerSecond.of(100);
-        public static final double SHOOTER_MAX_JERK = 10; // Unit is rotations/s^3
+        public static final AngularAcceleration SHOOTER_MAX_ACCELERATION = RotationsPerSecondPerSecond.of(300);
+        public static final double SHOOTER_MAX_JERK = 50; // Unit is rotations/s^3
            
     }
     
@@ -129,16 +129,16 @@ public final class Constants {
     }
 
     public final class KickerConstants {
-        public static final boolean ENABLED = false;
+        public static final boolean ENABLED = true;
         public static final int KICKER_MOTOR_ID = 28;
-        public static final boolean KICKER_MOTOR_INVERTED = false;
+        public static final boolean KICKER_MOTOR_INVERTED = true;
         public static final Voltage KICKER_MOTOR_VOLTAGE = Volt.of(10);
     }
 
     public final class SpindexerConstants {
-        public static final boolean ENABLED = false;
+        public static final boolean ENABLED = true;
         public static final int SPINDEXER_MOTOR_ID = 29;
-        public static final boolean SPINDEXER_MOTOR_INVERTED = false;
+        public static final boolean SPINDEXER_MOTOR_INVERTED = true;
         public static final Voltage SPINDEXER_MOTOR_VOLTAGE = Volt.of(10);
     }
 
@@ -151,18 +151,18 @@ public final class Constants {
     }
 
     public final class IntakeConstants {
-        public static final boolean ENABLED = false;
+        public static final boolean ENABLED = true;
 
         public static final int INTAKE_DEPLOYMENT_MOTOR_ID = 13;
         public static final boolean INTAKE_DEPLOYMENT_MOTOR_INVERTED = false;
-        public static final Voltage INTAKE_DEPLOYMENT_MOTOR_VOLTAGE = Volt.of(2.0);
+        public static final Voltage INTAKE_DEPLOYMENT_MOTOR_VOLTAGE = Volt.of(1.0);
 
         public static final int INTAKE_MOTOR_ID = 14;
         public static final boolean INTAKE_MOTOR_INVERTED = false;
-        public static final Voltage INTAKE_MOTOR_VOLTAGE = Volt.of(10.0);
+        public static final Voltage INTAKE_MOTOR_VOLTAGE = Volt.of(7.5);
 
-        public static final int INTAKE_RETRACTED_SENSOR_DIO = 15;
-        public static final int INTAKE_DEPLOYED_SENSOR_DIO = 16;
+        public static final int INTAKE_RETRACTED_SENSOR_DIO = 0;
+        public static final int INTAKE_DEPLOYED_SENSOR_DIO = 1;
     }
 
     public final class ClimbConstants {

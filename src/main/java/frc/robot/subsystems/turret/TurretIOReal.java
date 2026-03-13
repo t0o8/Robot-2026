@@ -42,9 +42,10 @@ public class TurretIOReal implements TurretIO {
         //turretPitchEncoder = turretPitchMotor.getEncoder();
 
         // Configure motors
+        
         turretYawConfig = new SparkMaxConfig();
         turretYawConfig.inverted(Constants.TurretConstants.TURRET_YAW_MOTOR_INVERTED);
-        turretYawConfig.idleMode(IdleMode.kCoast);
+        turretYawConfig.idleMode(IdleMode.kBrake);
         
         turretYawConfig.encoder.positionConversionFactor(yawConversionFactor);
         turretYawConfig.encoder.velocityConversionFactor(yawConversionFactor / 60.0);
@@ -72,7 +73,7 @@ public class TurretIOReal implements TurretIO {
 
     @Override
     public void setYawMotorVoltage(double voltage) {
-        turretYawMotor.setVoltage(voltage);
+        //turretYawMotor.setVoltage(voltage);
     }
 
     

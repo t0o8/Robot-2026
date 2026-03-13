@@ -297,21 +297,22 @@ public class TurretSubsystem extends SubsystemStateMachine<frc.robot.subsystems.
                 break;
                 
             case HOMING:
-                if (turretHomeingStartedActive) {
-                    turretYawVoltage = -0.5;
+                if (getStateTimer() < 1) {
+                    turretYawVoltage = -0.35;
                 } else {
-                    turretYawVoltage = 0.4;
+                    turretYawVoltage = 0.35;
+                    if (io.getHomingSensor()) {
+                        if (!turretHomingSeenZero && !turretHomeingStartedActive) {
+                            turretHomingSeenZero = true;
+                            turretHomingStart = io.getYawRadians();
+                        }
+                    } else {
+                        turretHomeingStartedActive = false;
+                    }
                 }
                 
                 turretPitchVoltage = 0.0;
-                if (io.getHomingSensor()) {
-                    if (!turretHomingSeenZero && !turretHomeingStartedActive) {
-                        turretHomingSeenZero = true;
-                        turretHomingStart = io.getYawRadians();
-                    }
-                } else {
-                    turretHomeingStartedActive = false;
-                }
+                
 
                 break;
 

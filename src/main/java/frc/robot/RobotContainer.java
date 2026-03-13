@@ -33,6 +33,7 @@ import frc.robot.commands.climb.ClimbCommand;
 import frc.robot.commands.intake.ActivateIntakeCommand;
 import frc.robot.commands.intake.DeployIntakeCommand;
 import frc.robot.commands.intake.RetractIntakeCommand;
+import frc.robot.commands.intake.ToggleIntakeDeployCommand;
 import frc.robot.commands.kicker.ActivateKickerCommand;
 import frc.robot.commands.spindexer.ActivateSpindexerCommand;
 import frc.robot.commands.turret.ActivateShooterCommand;
@@ -119,7 +120,7 @@ public class RobotContainer {
 	public SwerveInputStream swerveInputStream;
 
 	public static boolean rotationalAiming = false;
-	public static boolean turretHomed = false;
+	private boolean turretHomed = false;
 
 	public static Command driveFieldOrientedAngularVelocity;
 	public static Command turretAutoAimCommand;
@@ -131,7 +132,7 @@ public class RobotContainer {
 					driverController.leftXCombinedSupplier(),//() -> driverController.getLeftY() * -1,
 					driverController.leftYCombinedSupplier())//() -> driverController.getLeftX() * -1)
 					.withControllerRotationAxis(
-						driverController.rightXSupplier()
+						() -> {return -driverController.rightXSupplier().getAsDouble();}
 					)
 					.withControllerHeadingAxis(
 						calculationSubsystem.getRobotHeadingX(),
@@ -239,7 +240,7 @@ public class RobotContainer {
 			)
 		);
 
-		driverController.leftButton().toggleOnTrue(new DeployIntakeCommand()).toggleOnFalse(new RetractIntakeCommand());
+		driverController.leftButton().toggleOnTrue(new ToggleIntakeDeployCommand());
 
 		driverController.leftTrigger().whileTrue(new ActivateIntakeCommand());
 	}
@@ -269,7 +270,11 @@ public class RobotContainer {
 			FieldHelpers.rotateBlueFieldCoordinates(new Translation2d(Meter.of(2), Meter.of(4)))
 		);
 
-		CommandScheduler.getInstance().schedule(new HomeTurretCommand());
+		if (!turretHomed) {
+			CommandScheduler.getInstance().schedule(new HomeTurretCommand());
+			turretHomed = true;
+		}
+		
 	}
 
 	public void periodic() {
