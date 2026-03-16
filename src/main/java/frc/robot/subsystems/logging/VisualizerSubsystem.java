@@ -1,5 +1,6 @@
 package frc.robot.subsystems.logging;
 
+import static edu.wpi.first.units.Units.Degree;
 import static edu.wpi.first.units.Units.Meter;
 import static edu.wpi.first.units.Units.MetersPerSecond;
 import static edu.wpi.first.units.Units.Radian;
@@ -55,7 +56,7 @@ public class VisualizerSubsystem extends SubsystemBase {
 
             Double[] positionHistory = RobotContainer.calculationSubsystem.getProjectileSimulation().simulateLaunch(
                 launchSpeed,
-                RobotContainer.turretSubsystem.getTurretTargetPitch(),
+                Degree.of(90).minus(RobotContainer.turretSubsystem.getTurretTargetPitch()),
                 launchYaw,
                 RadiansPerSecond.of(-(launchSpeed.in(MetersPerSecond) / RobotContainer.calculationSubsystem.getProjectileSimulation().projectileRadius)),
                 RadiansPerSecond.of(0), 

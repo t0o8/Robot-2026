@@ -100,7 +100,6 @@ public class TurretSubsystem extends SubsystemStateMachine<frc.robot.subsystems.
     }
 
     public void setTurretPitch(Angle angle) {
-        System.out.println("TEST" + angle.in(Degree));
         turretPitchPID.setGoal(
             MathUtil.clamp(angle.in(Radian), Constants.TurretConstants.TURRET_PITCH_LOWER_LIMIT.in(Radian), Constants.TurretConstants.TURRET_PITCH_UPPER_LIMIT.in(Radian))
         );

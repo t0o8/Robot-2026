@@ -211,7 +211,7 @@ public class RobotContainer {
 			swerveSubsystem.setDefaultCommand(driveFieldOrientedAngularVelocity);
 		}
 
-		turretSubsystem.setDefaultCommand(new ManualAimCommand());
+		turretSubsystem.setDefaultCommand(new TurretAutoAimCommand());
 
 		driverController.leftStick().toggleOnTrue(new ToggleManualCommand(
 			() -> {return 0.0;}, driverController.rightYSupplier()
@@ -266,7 +266,9 @@ public class RobotContainer {
 		);
 
 		if (!turretHomed) {
-			CommandScheduler.getInstance().schedule(new HomeTurretCommand());
+			if (Robot.isReal()) {
+				CommandScheduler.getInstance().schedule(new HomeTurretCommand());
+			}
 			turretHomed = true;
 		}
 		

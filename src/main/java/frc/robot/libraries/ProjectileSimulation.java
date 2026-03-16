@@ -429,10 +429,24 @@ public class ProjectileSimulation {
     public LinearVelocity estimateShootingVelocity(Translation2d targetPosition, LinearVelocity speedLimitUpper, Translation2d robotVelocity) {
         double targetDistance = targetPosition.getNorm();
 
-        double percent = MathUtil.inverseInterpolate(0, 8, targetDistance);
+        if (targetDistance < 1e-6) {
+            return MetersPerSecond.of(speedLimitUpper.in(MetersPerSecond) * 0.3);
+        }
+
+        double baseVelocity = MathUtil.interpolate(
+            speedLimitUpper.in(MetersPerSecond) * 0.4,
+            speedLimitUpper.in(MetersPerSecond),
+            MathUtil.inverseInterpolate(0, 10, targetDistance)
+        );
+
+        double idealX = (targetPosition.getX() / targetDistance) * baseVelocity;
+        double idealY = (targetPosition.getY() / targetDistance) * baseVelocity;
+
+        double requiredX = idealX - robotVelocity.getX() * 0.5;
+        double requiredY = idealY - robotVelocity.getY() * 0.5;
 
         return MetersPerSecond.of(
-            MathUtil.interpolate(speedLimitUpper.in(MetersPerSecond) * 0.3, speedLimitUpper.in(MetersPerSecond), percent)
+            MathUtil.clamp(Math.sqrt(requiredX * requiredX + requiredY * requiredY), 0.0, speedLimitUpper.in(MetersPerSecond))
         );
     }
 
