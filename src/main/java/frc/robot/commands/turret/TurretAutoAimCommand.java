@@ -4,6 +4,7 @@ import static edu.wpi.first.units.Units.Degree;
 import static edu.wpi.first.units.Units.DegreesPerSecond;
 import static edu.wpi.first.units.Units.Meter;
 import static edu.wpi.first.units.Units.Radian;
+import static edu.wpi.first.units.Units.RotationsPerSecond;
 
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Translation2d;
@@ -48,6 +49,7 @@ public class TurretAutoAimCommand extends Command {
 
             AngularVelocity shooterSpeed = RobotContainer.calculationSubsystem.getProjectileSimulation().convertVelocityToShooterSpeed(targetSolution.launchSpeed(), Constants.ShooterConstants.SHOOTER_WHEEL_RADIUS, 0.5);
 
+            //RobotContainer.shooterSubsystem.setTargetSpeed(RotationsPerSecond.of(16.67 * 3));
             RobotContainer.shooterSubsystem.setTargetSpeed(shooterSpeed);
         }
 

@@ -33,7 +33,7 @@ import edu.wpi.first.wpilibj.util.Color;
 
 public final class Constants {
     public static class SwerveConstants {
-        public static final boolean ENABLED = true;
+        public static final boolean ENABLED = false;
         
         public static final File SWERVE_DIRECTORY = new File(Filesystem.getDeployDirectory(), "swerve"); // File with swerve configs.
         public static final LinearVelocity MAX_SPEED = MetersPerSecond.of(12); // Maximum speed the swerve drive can go
@@ -45,7 +45,7 @@ public final class Constants {
     }
 
     public final class TurretConstants {
-        public static final boolean ENABLED = true;
+        public static final boolean ENABLED = false;
 
         public static final int TURRET_YAW_MOTOR_ID = 56;
         public static final boolean TURRET_YAW_MOTOR_INVERTED = false;
@@ -110,11 +110,11 @@ public final class Constants {
         public static final double SHOOTER_I = 0;
         public static final double SHOOTER_D = 0;
         public static final Voltage SHOOTER_S = Volts.of(0.1);
-        public static final double SHOOTER_V = 0.19; // Unit is V/(rotations/s)
+        public static final double SHOOTER_V = 0.12; // Unit is V/(rotations/s)
         public static final double SHOOTER_A = 0.05; // Unit is V/(rotations/s^2)
         public static final Distance SHOOTER_WHEEL_RADIUS = Inch.of(2);
-        public static final AngularVelocity SHOOTER_MAX_VELOCITY = RotationsPerSecond.of(90);
-        public static final AngularVelocity SHOOTER_MIN_VELOCITY = RotationsPerSecond.of(10);
+        public static final AngularVelocity SHOOTER_MAX_VELOCITY = RotationsPerSecond.of(240);
+        public static final AngularVelocity SHOOTER_MIN_VELOCITY = RotationsPerSecond.of(30);
         public static final AngularAcceleration SHOOTER_MAX_ACCELERATION = RotationsPerSecondPerSecond.of(300);
         public static final double SHOOTER_MAX_JERK = 50; // Unit is rotations/s^3
            
@@ -131,16 +131,16 @@ public final class Constants {
 
     public final class KickerConstants {
         public static final boolean ENABLED = true;
-        public static final int KICKER_MOTOR_ID = 28;
+        public static final int KICKER_MOTOR_ID = 56; // 28
         public static final boolean KICKER_MOTOR_INVERTED = true;
-        public static final Voltage KICKER_MOTOR_VOLTAGE = Volt.of(12);
+        public static final Voltage KICKER_MOTOR_VOLTAGE = Volt.of(5);
     }
 
     public final class SpindexerConstants {
         public static final boolean ENABLED = true;
         public static final int SPINDEXER_MOTOR_ID = 29;
         public static final boolean SPINDEXER_MOTOR_INVERTED = true;
-        public static final Voltage SPINDEXER_MOTOR_VOLTAGE = Volt.of(10);
+        public static final Voltage SPINDEXER_MOTOR_VOLTAGE = Volt.of(1.5);
     }
 
     public final class OperatorConstants {
