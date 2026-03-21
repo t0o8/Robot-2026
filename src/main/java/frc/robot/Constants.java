@@ -45,13 +45,13 @@ public final class Constants {
     }
 
     public final class TurretConstants {
-        public static final boolean ENABLED = false;
+        public static final boolean ENABLED = true;
 
         public static final int TURRET_YAW_MOTOR_ID = 56;
         public static final boolean TURRET_YAW_MOTOR_INVERTED = false;
         public static final boolean TURRET_YAW_ENCODER_INVERTED = false;
         public static final boolean TURRET_YAW_ABSOLUTE_ENCODER_INVERTED = false;
-        public static final double TURRET_YAW_GEAR_RATIO = 142.0 / 13.0; // Rotations of the motor for one rotation of the turret
+        public static final double TURRET_YAW_GEAR_RATIO = 113.0 / 13.0; // Rotations of the motor for one rotation of the turret
         public static final double TURRET_YAW_COUNTS_PER_REV = 42;
         public static final double TURRET_YAW_FUSION_MULTIPLIER = 2.0;
         public static final double TURRET_YAW_P = 3.9;
@@ -62,7 +62,7 @@ public final class Constants {
         public static final double TURRET_YAW_A = 0.0186; // Unit is V/(rad/s^2)
         public static final AngularVelocity TURRET_YAW_MAX_VELOCITY = DegreesPerSecond.of(1440);
         public static final AngularAcceleration TURRET_YAW_MAX_ACCELERATION = DegreesPerSecondPerSecond.of(1800);
-        public static final Angle TURRET_YAW_IZONE = Degree.of(2);
+        public static final Angle TURRET_YAW_IZONE = Degree.of(5);
         public static final int TURRET_YAW_HOMING_SENSOR_DIO = 2;
         public static final Voltage TURRET_YAW_HOMING_SEARCHING_VOLTAGE = Volt.of(0.35);
         public static final Voltage TURRET_YAW_HOMING_REFINING_VOLTAGE = Volt.of(-0.15);
@@ -71,15 +71,16 @@ public final class Constants {
         public static final boolean TURRET_PITCH_MOTOR_INVERTED = false;
         public static final double TURRET_PITCH_GEAR_RATIO = 160.0 / 14.0; // Rotations of the motor for one rotation of the pitch
         public static final double TURRET_PITCH_ZERO_OFFSET = 0;
-        public static final double TURRET_PITCH_P = 0.05;
+        public static final double TURRET_PITCH_P = 4;
         public static final double TURRET_PITCH_I = 0;
-        public static final double TURRET_PITCH_D = 0;
+        public static final double TURRET_PITCH_D = 0.04;
         public static final Voltage TURRET_PITCH_S = Volts.of(0.1);
-        public static final Voltage TURRET_PITCH_G = Volts.of(0.2);
-        public static final double TURRET_PITCH_V = 0.15; // Unit is V/(rad/s)
-        public static final double TURRET_PITCH_A = 0.15; // Unit is V/(rad/s^2)
-        public static final AngularVelocity TURRET_PITCH_MAX_VELOCITY = DegreesPerSecond.of(150);
-        public static final AngularAcceleration TURRET_PITCH_MAX_ACCELERATION = DegreesPerSecondPerSecond.of(80);
+        public static final Voltage TURRET_PITCH_G = Volts.of(0.145);
+        public static final double TURRET_PITCH_V = 0.134; // Unit is V/(rad/s)
+        public static final double TURRET_PITCH_A = 0.019; // Unit is V/(rad/s^2)
+        public static final AngularVelocity TURRET_PITCH_MAX_VELOCITY = DegreesPerSecond.of(600);
+        public static final AngularAcceleration TURRET_PITCH_MAX_ACCELERATION = DegreesPerSecondPerSecond.of(600);
+        public static final Angle TURRET_PITCH_IZONE = Degree.of(5);
 
         public static final Angle TURRET_PITCH_UPPER_LIMIT = Degree.of(40);
         public static final Angle TURRET_PITCH_LOWER_LIMIT = Degree.of(1);
@@ -96,7 +97,7 @@ public final class Constants {
     }
 
     public final class ShooterConstants {
-        public static final boolean ENABLED = true;
+        public static final boolean ENABLED = false;
 
         public static final int SHOOTER_MOTOR_1_ID = 15;
         public static final boolean SHOOTER_MOTOR_1_INVERTED = true;
@@ -115,7 +116,7 @@ public final class Constants {
         public static final Distance SHOOTER_WHEEL_RADIUS = Inch.of(2);
         public static final AngularVelocity SHOOTER_MAX_VELOCITY = RotationsPerSecond.of(240);
         public static final AngularVelocity SHOOTER_MIN_VELOCITY = RotationsPerSecond.of(30);
-        public static final AngularAcceleration SHOOTER_MAX_ACCELERATION = RotationsPerSecondPerSecond.of(300);
+        public static final AngularAcceleration SHOOTER_MAX_ACCELERATION = RotationsPerSecondPerSecond.of(400);
         public static final double SHOOTER_MAX_JERK = 50; // Unit is rotations/s^3
            
     }
@@ -131,8 +132,8 @@ public final class Constants {
 
     public final class KickerConstants {
         public static final boolean ENABLED = true;
-        public static final int KICKER_MOTOR_ID = 56; // 28
-        public static final boolean KICKER_MOTOR_INVERTED = true;
+        public static final int KICKER_MOTOR_ID = 28;
+        public static final boolean KICKER_MOTOR_INVERTED = false;
         public static final Voltage KICKER_MOTOR_VOLTAGE = Volt.of(5);
     }
 

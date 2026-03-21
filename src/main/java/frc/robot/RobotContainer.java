@@ -211,7 +211,7 @@ public class RobotContainer {
 			swerveSubsystem.setDefaultCommand(driveFieldOrientedAngularVelocity);
 		}
 
-		turretSubsystem.setDefaultCommand(new TurretAutoAimCommand());
+		turretSubsystem.setDefaultCommand(new ManualAimCommand());
 
 		driverController.leftStick().toggleOnTrue(new ToggleManualCommand(
 			() -> {return 0.0;}, driverController.rightYSupplier()
