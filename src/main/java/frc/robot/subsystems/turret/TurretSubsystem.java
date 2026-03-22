@@ -124,7 +124,7 @@ public class TurretSubsystem extends SubsystemStateMachine<frc.robot.subsystems.
 
     public Angle getTurretPointAngle(Angle globalAngle) {
         return Radian.of(
-            MathUtil.angleModulus(globalAngle.in(Radian) - RobotContainer.swerveSubsystem.getPose2d().getRotation().getRadians())
+            MathUtil.angleModulus(RobotContainer.swerveSubsystem.getPose2d().getRotation().getRadians() - globalAngle.in(Radian) + Math.PI)
         );
     }
 
@@ -147,7 +147,11 @@ public class TurretSubsystem extends SubsystemStateMachine<frc.robot.subsystems.
     }
 
     private double calculateTurretYawVoltage() {
-        double turretYawVoltage = turretYawPID.calculate(io.getYawRadians());
+        double turretYawVoltage = MathUtil.clamp(
+            turretYawPID.calculate(io.getYawRadians()),
+            -0.6,
+            0.6
+        );
 
         TrapezoidProfile.State turretYawState = turretYawPID.getSetpoint();
         turretYawVoltage += turretYawFF.calculateWithVelocities(turretPrevYawSetpointVelocity, turretYawState.velocity);
@@ -222,7 +226,7 @@ public class TurretSubsystem extends SubsystemStateMachine<frc.robot.subsystems.
                 break;
             case HOMING:
                 if (io.getHomingSensor() == false && turretHomingStage == HomingStage.REFINING_END) {
-                    io.setYawEncoderPosition((io.getYawRadians() - turretHomingStart));
+                    io.setYawEncoderPosition((io.getYawRadians() - turretHomingStart + Constants.TurretConstants.TURRET_YAW_OFFSET.in(Radian)));
                     resetTurretPitch();
                     resetTurretYaw();
                     requestDesiredState(TurretState.IDLE, 6);
