@@ -157,8 +157,12 @@ public final class Constants {
     public final class IntakeConstants {
         public static final boolean ENABLED = false;
 
-        public static final int INTAKE_DEPLOYMENT_MOTOR_ID = 13;
-        public static final boolean INTAKE_DEPLOYMENT_MOTOR_INVERTED = false;
+        public static final int INTAKE_DEPLOYMENT_MOTOR_ID_1 = 13;
+        public static final boolean INTAKE_DEPLOYMENT_MOTOR_INVERTED_1 = false;
+
+        public static final int INTAKE_DEPLOYMENT_MOTOR_ID_2 = 17;
+        public static final boolean INTAKE_DEPLOYMENT_MOTOR_INVERTED_2 = false;
+
         public static final Voltage INTAKE_DEPLOYMENT_MOTOR_VOLTAGE = Volt.of(1.0);
 
         public static final int INTAKE_MOTOR_ID = 14;

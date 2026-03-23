@@ -245,7 +245,6 @@ public class RobotContainer {
 
 		driverController.leftTrigger().whileTrue(new ActivateIntakeCommand());
 	}
-	
 
 	public static boolean isBlueAlliance(){
         var alliance = DriverStation.getAlliance();

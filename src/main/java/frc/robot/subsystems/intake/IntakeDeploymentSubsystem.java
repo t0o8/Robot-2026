@@ -85,7 +85,7 @@ public class IntakeDeploymentSubsystem extends SubsystemStateMachine<frc.robot.s
 
         switch (getCurrentState()) {
             case UNKNOWN:
-                intakeDeploymentVoltage = Constants.IntakeConstants.INTAKE_DEPLOYMENT_MOTOR_VOLTAGE.in(Volt);
+                intakeDeploymentVoltage = -Constants.IntakeConstants.INTAKE_DEPLOYMENT_MOTOR_VOLTAGE.in(Volt);
                 break;
             case RETRACTED:
                 intakeDeploymentVoltage = 0.0;
@@ -94,10 +94,10 @@ public class IntakeDeploymentSubsystem extends SubsystemStateMachine<frc.robot.s
                 intakeDeploymentVoltage = 0.0;
                 break;
             case RETRACTING:
-                intakeDeploymentVoltage = Constants.IntakeConstants.INTAKE_DEPLOYMENT_MOTOR_VOLTAGE.in(Volt);
+                intakeDeploymentVoltage = -Constants.IntakeConstants.INTAKE_DEPLOYMENT_MOTOR_VOLTAGE.in(Volt);
                 break;
             case DEPLOYING:
-                intakeDeploymentVoltage = -Constants.IntakeConstants.INTAKE_DEPLOYMENT_MOTOR_VOLTAGE.in(Volt);
+                intakeDeploymentVoltage = Constants.IntakeConstants.INTAKE_DEPLOYMENT_MOTOR_VOLTAGE.in(Volt);
                 break;
         }
 
