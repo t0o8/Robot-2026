@@ -34,7 +34,7 @@ public class LimelightSubsystem extends SubsystemBase {
 
         double robotAngle = RobotContainer.swerveSubsystem.getAngle().in(Degree);
 
-        LimelightHelpers.SetRobotOrientation("limelight", robotAngle, 0.0, 0.0, 0.0, 0.0, 0.0);
+        LimelightHelpers.SetRobotOrientation("limelight", robotAngle, RobotContainer.swerveSubsystem.getAngularVelocity().in(DegreesPerSecond), 0.0, 0.0, 0.0, 0.0);
 
         limelightMeasurement = LimelightHelpers.getBotPoseEstimate_wpiBlue_MegaTag2("limelight");
         

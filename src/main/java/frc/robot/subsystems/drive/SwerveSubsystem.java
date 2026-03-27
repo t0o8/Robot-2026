@@ -175,7 +175,7 @@ public class SwerveSubsystem extends SubsystemBase{
             return Degree.of(0);
         }
 
-        return Degree.of(swerveDrive.getYaw().getDegrees());
+        return Degree.of(swerveDrive.getPose().getRotation().getDegrees());
     }
 
     public AngularVelocity getAngularVelocity() {
