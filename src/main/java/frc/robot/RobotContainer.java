@@ -37,6 +37,7 @@ import frc.robot.commands.intake.RetractIntakeCommand;
 import frc.robot.commands.intake.ToggleIntakeDeployCommand;
 import frc.robot.commands.kicker.ActivateKickerCommand;
 import frc.robot.commands.kicker.ReverseKickerCommand;
+import frc.robot.commands.smart.SmartShootCommand;
 import frc.robot.commands.spindexer.ActivateSpindexerCommand;
 import frc.robot.commands.spindexer.ReverseSpindexerCommand;
 import frc.robot.commands.turret.ActivateShooterCommand;
@@ -237,6 +238,7 @@ public class RobotContainer {
 
 		driverController.rightButton().toggleOnTrue(new ActivateShooterCommand());
 
+		/*
 		driverController.rightTrigger().whileTrue(new ParallelCommandGroup(
 				new ActivateKickerCommand(),
 				new ActivateSpindexerCommand()
@@ -248,6 +250,8 @@ public class RobotContainer {
 				new ReverseSpindexerCommand()
 			)
 		);
+		*/
+		driverController.rightTrigger().whileTrue(new SmartShootCommand());
 
 		driverController.leftButton().toggleOnTrue(new ToggleIntakeDeployCommand());
 

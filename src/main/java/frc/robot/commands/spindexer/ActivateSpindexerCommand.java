@@ -29,6 +29,6 @@ public class ActivateSpindexerCommand extends Command{
 
     @Override
     public void end(boolean interrupted) {
-        RobotContainer.spindexerSubsystem.requestDesiredState(SpindexerState.READY, 5);
+        RobotContainer.spindexerSubsystem.requestDesiredState(SpindexerState.IDLE, 5);
     }
 }

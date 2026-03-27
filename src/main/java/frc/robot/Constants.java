@@ -1,5 +1,6 @@
 package frc.robot;
 
+import static edu.wpi.first.units.Units.Amp;
 import static edu.wpi.first.units.Units.Degree;
 import static edu.wpi.first.units.Units.DegreesPerSecond;
 import static edu.wpi.first.units.Units.DegreesPerSecondPerSecond;
@@ -21,6 +22,7 @@ import edu.wpi.first.units.Measure;
 import edu.wpi.first.units.measure.Angle;
 import edu.wpi.first.units.measure.AngularAcceleration;
 import edu.wpi.first.units.measure.AngularVelocity;
+import edu.wpi.first.units.measure.Current;
 import edu.wpi.first.units.measure.Distance;
 import edu.wpi.first.units.measure.LinearAcceleration;
 import edu.wpi.first.units.measure.LinearVelocity;
@@ -137,6 +139,7 @@ public final class Constants {
         public static final int KICKER_MOTOR_ID = 28;
         public static final boolean KICKER_MOTOR_INVERTED = false;
         public static final Voltage KICKER_MOTOR_VOLTAGE = Volt.of(5);
+        public static final Current KICKER_STALL_CURRENT = Amp.of(20);
     }
 
     public final class SpindexerConstants {
@@ -144,6 +147,7 @@ public final class Constants {
         public static final int SPINDEXER_MOTOR_ID = 29;
         public static final boolean SPINDEXER_MOTOR_INVERTED = true;
         public static final Voltage SPINDEXER_MOTOR_VOLTAGE = Volt.of(1.5);
+        public static final Current SPINDEXER_STALL_CURRENT = Amp.of(20);
     }
 
     public final class OperatorConstants {
