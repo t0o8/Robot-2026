@@ -93,7 +93,7 @@ public class SpindexerSubsystem extends SubsystemStateMachine<frc.robot.subsyste
                 spindexerVoltage = 0;
                 break;
             case READY_REVERSE:
-                spindexerVoltage = -Constants.SpindexerConstants.SPINDEXER_MOTOR_VOLTAGE.in(Volt);
+                spindexerVoltage = -Constants.SpindexerConstants.SPINDEXER_MOTOR_VOLTAGE.in(Volt) * 5;
                 break;
             case READY:
                 spindexerVoltage = Constants.SpindexerConstants.SPINDEXER_MOTOR_VOLTAGE.in(Volt);
@@ -103,6 +103,8 @@ public class SpindexerSubsystem extends SubsystemStateMachine<frc.robot.subsyste
         io.setMotorVoltage(spindexerVoltage);
 
         SmartDashboard.putNumber("Spindexer/Voltage", spindexerVoltage);
+
+        SmartDashboard.putNumber("Spindexer/Current", io.getMotorCurrent());
 
         SmartDashboard.putString("Spindexer/Current State", getCurrentState().name());
         SmartDashboard.putString("Spindexer/Desired State", getDesiredState().name());

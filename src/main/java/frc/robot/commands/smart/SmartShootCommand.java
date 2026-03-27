@@ -22,7 +22,7 @@ public class SmartShootCommand extends Command {
 
     public SmartShootCommand() {
         shootStateMachine = new StateMachine<SmartShootCommand.SmartShootStatus>(SmartShootStatus.FORWARD, null);
-        overCurrentDebouncer = new Debouncer(0.5, Debouncer.DebounceType.kRising);
+        overCurrentDebouncer = new Debouncer(1, Debouncer.DebounceType.kRising);
         
         addRequirements(RobotContainer.spindexerSubsystem, RobotContainer.kickerSubsystem);
     }
