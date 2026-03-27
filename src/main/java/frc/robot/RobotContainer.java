@@ -36,7 +36,9 @@ import frc.robot.commands.intake.DeployIntakeCommand;
 import frc.robot.commands.intake.RetractIntakeCommand;
 import frc.robot.commands.intake.ToggleIntakeDeployCommand;
 import frc.robot.commands.kicker.ActivateKickerCommand;
+import frc.robot.commands.kicker.ReverseKickerCommand;
 import frc.robot.commands.spindexer.ActivateSpindexerCommand;
+import frc.robot.commands.spindexer.ReverseSpindexerCommand;
 import frc.robot.commands.turret.ActivateShooterCommand;
 import frc.robot.commands.turret.HomeTurretCommand;
 import frc.robot.commands.turret.ManualAimCommand;
@@ -238,6 +240,12 @@ public class RobotContainer {
 		driverController.rightTrigger().whileTrue(new ParallelCommandGroup(
 				new ActivateKickerCommand(),
 				new ActivateSpindexerCommand()
+			)
+		);
+
+		driverController.rightBumper().whileTrue(new ParallelCommandGroup(
+				new ReverseKickerCommand(),
+				new ReverseSpindexerCommand()
 			)
 		);
 
