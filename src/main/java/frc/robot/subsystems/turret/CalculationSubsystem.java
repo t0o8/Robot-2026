@@ -92,10 +92,10 @@ public class CalculationSubsystem {
         };
 
         trenchZone = new Translation2d[] {
-            blueHub.toTranslation2d().plus(new Translation2d(0, Constants.FieldConstants.TRENCH_OFFSET.in(Meter))),
-            blueHub.toTranslation2d().plus(new Translation2d(0, -Constants.FieldConstants.TRENCH_OFFSET.in(Meter))),
-            redHub.toTranslation2d().plus(new Translation2d(0, Constants.FieldConstants.TRENCH_OFFSET.in(Meter))),
-            redHub.toTranslation2d().plus(new Translation2d(0, -Constants.FieldConstants.TRENCH_OFFSET.in(Meter)))
+            blueHub.toTranslation2d().plus(new Translation2d(-1, -20)),
+            blueHub.toTranslation2d().plus(new Translation2d(1, 20)),
+            redHub.toTranslation2d().plus(new Translation2d(-1,-20)),
+            redHub.toTranslation2d().plus(new Translation2d(1,20))
         };
 
         if (RobotContainer.isBlueAlliance()) {
@@ -113,6 +113,19 @@ public class CalculationSubsystem {
 
     public void updateBotZone(Pose2d botPose) {
 
+        if ((trenchZone[0].getX() <= botPose.getX() && 
+            trenchZone[0].getY() <= botPose.getY() &&
+            trenchZone[1].getX() >= botPose.getX() && 
+            trenchZone[1].getY() >= botPose.getY()) ||
+            (trenchZone[2].getX() <= botPose.getX() && 
+            trenchZone[2].getY() <= botPose.getY() &&
+            trenchZone[3].getX() >= botPose.getX() && 
+            trenchZone[3].getY() >= botPose.getY())) {
+            botZone = Zone.TRENCH;
+            return;
+        }
+
+        /*
         for (int index = 0; index < 4; index++) {
             double distance = botPose.getTranslation().getDistance(trenchZone[index]);
             if (distance < Constants.FieldConstants.TRENCH_RADIUS.in(Meter)) {
@@ -120,6 +133,7 @@ public class CalculationSubsystem {
                 return;
             }
         }
+        */
         
         if (allianceZone[0].getX() <= botPose.getX() && allianceZone[0].getY() <= botPose.getY() &&
             allianceZone[1].getX() >= botPose.getX() && allianceZone[1].getY() >= botPose.getY()) {

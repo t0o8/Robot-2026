@@ -62,7 +62,7 @@ public class SwerveSubsystem extends SubsystemBase{
                     .createSwerveDrive(
                         Constants.SwerveConstants.MAX_SPEED.in(MetersPerSecond),
                         new Pose2d(
-                            new Translation2d(Meter.of(2), Meter.of(4)),
+                            new Translation2d(Meter.of(3), Meter.of(4)),
                             Rotation2d.fromDegrees(0)));
             }
             catch (Exception e) {

@@ -12,6 +12,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.RobotContainer;
 import frc.robot.libraries.LimelightHelpers;
+import frc.robot.libraries.PoseHelpers;
 import swervelib.SwerveDrive;
 
 public class LimelightSubsystem extends SubsystemBase {
@@ -45,6 +46,7 @@ public class LimelightSubsystem extends SubsystemBase {
                     RobotContainer.swerveSubsystem.setVisionMeasurementStdDevs(visionStandardDevs);
                     RobotContainer.swerveSubsystem.addVisionMeasurement(limelightMeasurement.pose, limelightMeasurement.timestampSeconds);
                     SmartDashboard.putBoolean("LimeLight/Tag", true);
+                    SmartDashboard.putNumberArray("LimeLight/Position", PoseHelpers.convertPoseToNumbers(limelightMeasurement.pose));
                 } else {
                     SmartDashboard.putBoolean("LimeLight/Tag", false);
                 }

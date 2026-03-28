@@ -57,13 +57,13 @@
                           {
                             "type": "named",
                             "data": {
-                              "name": "ActivateIntakeCommand"
+                              "name": "DeployIntakeCommand"
                             }
                           },
                           {
                             "type": "named",
                             "data": {
-                              "name": "DeployIntakeCommand"
+                              "name": "ActivateIntakeCommand"
                             }
                           }
                         ]
@@ -123,12 +123,6 @@
                                   "type": "parallel",
                                   "data": {
                                     "commands": [
-                                      {
-                                        "type": "named",
-                                        "data": {
-                                          "name": "ActivateIntakeCommand"
-                                        }
-                                      },
                                       {
                                         "type": "named",
                                         "data": {
@@ -235,12 +229,6 @@
                                   "type": "parallel",
                                   "data": {
                                     "commands": [
-                                      {
-                                        "type": "named",
-                                        "data": {
-                                          "name": "ActivateIntakeCommand"
-                                        }
-                                      },
                                       {
                                         "type": "named",
                                         "data": {
