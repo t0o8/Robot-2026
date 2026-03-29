@@ -59,7 +59,7 @@ public final class Constants {
         public static final double TURRET_YAW_P = 2.75;
         public static final double TURRET_YAW_I = 0.4;
         public static final double TURRET_YAW_D = 0.1;
-        public static final Voltage TURRET_YAW_S = Volts.of(0.14);
+        public static final Voltage TURRET_YAW_S = Volts.of(0.2);
         public static final double TURRET_YAW_V = 0.12; // Unit is V/(rad/s)
         public static final double TURRET_YAW_A = 0.018; // Unit is V/(rad/s^2)
         public static final AngularVelocity TURRET_YAW_MAX_VELOCITY = DegreesPerSecond.of(2000);

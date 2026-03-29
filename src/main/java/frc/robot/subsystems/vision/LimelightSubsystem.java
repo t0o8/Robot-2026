@@ -12,13 +12,13 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.RobotContainer;
 import frc.robot.libraries.LimelightHelpers;
+import frc.robot.libraries.PoseHelpers;
 import swervelib.SwerveDrive;
 
 public class LimelightSubsystem extends SubsystemBase {
     
     private LimelightHelpers.PoseEstimate limelightMeasurement;
 
-    private static final Matrix<N3, N1> visionStandardDevs = VecBuilder.fill(.7, .7, 99999999);
 
     public LimelightSubsystem() {
         
@@ -31,7 +31,7 @@ public class LimelightSubsystem extends SubsystemBase {
 
     public void getVisionEstimate() {
 
-        LimelightHelpers.SetIMUMode("limelight", 4);
+        // LimelightHelpers.SetIMUMode("limelight", 4);
 
         double robotAngle = RobotContainer.swerveSubsystem.getAngle().in(Degree);
 
@@ -42,9 +42,19 @@ public class LimelightSubsystem extends SubsystemBase {
         try {
             if (limelightMeasurement != null && limelightMeasurement.pose != null) {
                 if (limelightMeasurement.tagCount > 0) {
-                    RobotContainer.swerveSubsystem.setVisionMeasurementStdDevs(visionStandardDevs);
+                    double distance = limelightMeasurement.avgTagDist;
+
+                    if (limelightMeasurement.tagCount == 1 && distance > 4.0) {
+                        return;
+                    }
+
+                    double stdDevs = 0.6 + (distance * distance * 0.15);
+
+                    RobotContainer.swerveSubsystem.setVisionMeasurementStdDevs(VecBuilder.fill(stdDevs, stdDevs, 99999999));
                     RobotContainer.swerveSubsystem.addVisionMeasurement(limelightMeasurement.pose, limelightMeasurement.timestampSeconds);
+                    SmartDashboard.putNumber("Limelight/StdDevs", stdDevs);
                     SmartDashboard.putBoolean("LimeLight/Tag", true);
+                    SmartDashboard.putNumberArray("LimeLight/Position", PoseHelpers.convertPoseToNumbers(limelightMeasurement.pose));
                 } else {
                     SmartDashboard.putBoolean("LimeLight/Tag", false);
                 }

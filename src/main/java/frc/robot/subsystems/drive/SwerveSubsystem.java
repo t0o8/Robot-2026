@@ -35,6 +35,7 @@ import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.RobotContainer;
+import frc.robot.libraries.FieldHelpers;
 import swervelib.SwerveDrive;
 import swervelib.math.SwerveMath;
 import swervelib.parser.SwerveParser;
@@ -62,7 +63,7 @@ public class SwerveSubsystem extends SubsystemBase{
                     .createSwerveDrive(
                         Constants.SwerveConstants.MAX_SPEED.in(MetersPerSecond),
                         new Pose2d(
-                            new Translation2d(Meter.of(2), Meter.of(4)),
+                            new Translation2d(Meter.of(3), Meter.of(4)),
                             Rotation2d.fromDegrees(0)));
             }
             catch (Exception e) {
@@ -83,7 +84,7 @@ public class SwerveSubsystem extends SubsystemBase{
                 e.printStackTrace();
                 return;
             }
-
+            
             AutoBuilder.configure(
                 this::getPose2d,
                 this::resetOdometry,
@@ -132,7 +133,7 @@ public class SwerveSubsystem extends SubsystemBase{
 
     public Command zeroGyroCommand() {
 
-        return Commands.runOnce(() -> {zeroGyro();});
+        return Commands.runOnce(() -> {resetOdometry(FieldHelpers.rotateBlueFieldCoordinates(new Translation2d(Meter.of(2), Meter.of(4)), RobotContainer.isRedAlliance()));});
     }
 
     public Pose2d getPose2d() {
