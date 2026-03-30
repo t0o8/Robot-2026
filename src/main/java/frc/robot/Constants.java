@@ -38,7 +38,7 @@ public final class Constants {
         public static final boolean ENABLED = true;
         
         public static final File SWERVE_DIRECTORY = new File(Filesystem.getDeployDirectory(), "swerve"); // File with swerve configs.
-        public static final LinearVelocity MAX_SPEED = MetersPerSecond.of(12); // Maximum speed the swerve drive can go
+        public static final LinearVelocity MAX_SPEED = MetersPerSecond.of(7); // Maximum speed the swerve drive can go
         public static final Angle GYRO_OFFSET = Degree.of(0);
 
         public static final double DRIVE_P = 1;
@@ -208,5 +208,9 @@ public final class Constants {
         public static final Distance PASS_OFFSET = Meter.of(2);
         public static final Distance TRENCH_OFFSET = Meter.of(3);
         public static final Distance TRENCH_RADIUS = Meter.of(1);
+    }
+
+    public final class VisionConstants {
+        public static final String[] LIMELIGHT_NAMES = new String[] {"limelight"};
     }
 }

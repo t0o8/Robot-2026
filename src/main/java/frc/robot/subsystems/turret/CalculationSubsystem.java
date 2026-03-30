@@ -56,7 +56,7 @@ public class CalculationSubsystem {
     private Thread projectileThread;
 
     public CalculationSubsystem() {
-        targetInputs = new AtomicReference<>(new TargetInput(MetersPerSecond.of(1), DegreesPerSecond.of(0), new Translation2d(), new Translation3d(), 1, 1));
+        targetInputs = new AtomicReference<>(new TargetInput(MetersPerSecond.of(1), DegreesPerSecond.of(0), new Translation2d(), new Translation3d(), 0.5, 1, 1));
         targetSolutions = new AtomicReference<>(new TargetSolution(TargetErrorCode.IDEAL_PITCH, MetersPerSecond.of(10), Degree.of(0), Degree.of(0), Second.of(0), new TargetDebug(0, 0, 0)));
     }
 
@@ -184,6 +184,7 @@ public class CalculationSubsystem {
                 fieldSpeeds.vyMetersPerSecond
             ),
             robotTargetRelative,
+            Constants.FuelPhysicsConstants.EFFICENCY,
             Constants.FuelPhysicsConstants.MAX_STEPS,
             Constants.FuelPhysicsConstants.TPS
         ));

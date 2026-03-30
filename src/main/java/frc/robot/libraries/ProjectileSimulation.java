@@ -91,6 +91,7 @@ public class ProjectileSimulation {
         AngularVelocity launchAngularYaw,
         Translation2d robotVelocity,
         Translation3d targetPosition,
+        double efficiency,
         int maxSteps, 
         int tps
     ) {};
@@ -456,6 +457,7 @@ public class ProjectileSimulation {
             targetInput.launchAngularYaw,
             targetInput.robotVelocity,
             targetInput.targetPosition,
+            targetInput.efficiency,
             targetInput.maxSteps,
             targetInput.tps
         );
@@ -471,7 +473,7 @@ public class ProjectileSimulation {
      * @param tps The ticks per second that physics will be calculated at
      * @return The target solution
      */
-    public TargetSolution calculateLaunchAngleSimulation(LinearVelocity startLaunchSpeed, AngularVelocity launchAngularYaw, Translation2d robotVelocity, Translation3d targetPosition, int maxSteps, int tps) {
+    public TargetSolution calculateLaunchAngleSimulation(LinearVelocity startLaunchSpeed, AngularVelocity launchAngularYaw, Translation2d robotVelocity, Translation3d targetPosition, double efficiency, int maxSteps, int tps) {
         
         Distance horizontalDistance = Meter.of(Math.sqrt(Math.pow(targetPosition.getX(), 2) + Math.pow(targetPosition.getY(), 2)));
 
@@ -486,8 +488,8 @@ public class ProjectileSimulation {
         double pitchLimitUpper = (Math.PI / 2.0) - Constants.TurretConstants.TURRET_PITCH_LOWER_LIMIT.in(Radians);
         double pitchLimitLower = (Math.PI / 2.0) - Constants.TurretConstants.TURRET_PITCH_UPPER_LIMIT.in(Radians);
 
-        double speedLimitUpper = convertShooterSpeedToVelocity(Constants.ShooterConstants.SHOOTER_MAX_VELOCITY, Constants.ShooterConstants.SHOOTER_WHEEL_RADIUS, 0.5).in(MetersPerSecond);
-        double speedLimitLower = convertShooterSpeedToVelocity(Constants.ShooterConstants.SHOOTER_MIN_VELOCITY, Constants.ShooterConstants.SHOOTER_WHEEL_RADIUS, 0.5).in(MetersPerSecond);
+        double speedLimitUpper = convertShooterSpeedToVelocity(Constants.ShooterConstants.SHOOTER_MAX_VELOCITY, Constants.ShooterConstants.SHOOTER_WHEEL_RADIUS, efficiency).in(MetersPerSecond);
+        double speedLimitLower = convertShooterSpeedToVelocity(Constants.ShooterConstants.SHOOTER_MIN_VELOCITY, Constants.ShooterConstants.SHOOTER_WHEEL_RADIUS, efficiency).in(MetersPerSecond);
 
         double launchPitch = launchAnglePitch1Temp.in(Radians);
         double launchSpeed = estimateShootingVelocity(targetPosition.toTranslation2d(), MetersPerSecond.of(speedLimitUpper), robotVelocity).in(MetersPerSecond);
@@ -495,11 +497,11 @@ public class ProjectileSimulation {
 
         double perturbation = 0.05;
 
-        double[] error = calculateLaunchError(MetersPerSecond.of(launchSpeed), Radians.of(launchPitch), Radians.of(launchYaw), RadiansPerSecond.of(-(launchSpeed / projectileRadius)), launchAngularYaw, robotVelocity, targetPosition, Radians.of(targetDirectAngle), horizontalDistance, tps);
+        double[] error = calculateLaunchError(MetersPerSecond.of(launchSpeed), Radians.of(launchPitch), Radians.of(launchYaw), RadiansPerSecond.of(-(launchSpeed / projectileRadius) * efficiency), launchAngularYaw, robotVelocity, targetPosition, Radians.of(targetDirectAngle), horizontalDistance, tps);
 
-        double[] pitchError = calculateLaunchError(MetersPerSecond.of(launchSpeed), Radians.of(launchPitch + perturbation), Radians.of(launchYaw), RadiansPerSecond.of(-(launchSpeed / projectileRadius)), launchAngularYaw, robotVelocity, targetPosition, Radians.of(targetDirectAngle), horizontalDistance, tps);
+        double[] pitchError = calculateLaunchError(MetersPerSecond.of(launchSpeed), Radians.of(launchPitch + perturbation), Radians.of(launchYaw), RadiansPerSecond.of(-(launchSpeed / projectileRadius) * efficiency), launchAngularYaw, robotVelocity, targetPosition, Radians.of(targetDirectAngle), horizontalDistance, tps);
 
-        double[] yawError = calculateLaunchError(MetersPerSecond.of(launchSpeed), Radians.of(launchPitch), Radians.of(launchYaw + perturbation), RadiansPerSecond.of(-((launchSpeed) / projectileRadius)), launchAngularYaw, robotVelocity, targetPosition, Radians.of(targetDirectAngle), horizontalDistance, tps);
+        double[] yawError = calculateLaunchError(MetersPerSecond.of(launchSpeed), Radians.of(launchPitch), Radians.of(launchYaw + perturbation), RadiansPerSecond.of(-((launchSpeed) / projectileRadius) * efficiency), launchAngularYaw, robotVelocity, targetPosition, Radians.of(targetDirectAngle), horizontalDistance, tps);
 
         double pitchDelta;
         double yawDelta;
@@ -532,7 +534,7 @@ public class ProjectileSimulation {
                 MetersPerSecond.of(launchSpeed), 
                 Radians.of(launchPitch), 
                 Radians.of(launchYaw), 
-                RadiansPerSecond.of(-(launchSpeed / projectileRadius)), 
+                RadiansPerSecond.of(-(launchSpeed / projectileRadius) * efficiency), 
                 launchAngularYaw, 
                 robotVelocity, 
                 targetPosition, 
