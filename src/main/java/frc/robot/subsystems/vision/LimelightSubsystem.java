@@ -70,7 +70,7 @@ public class LimelightSubsystem extends SubsystemBase {
         
         double robotTranslationalVelocity = Math.hypot(robotChassisSpeeds.vxMetersPerSecond, robotChassisSpeeds.vyMetersPerSecond);
 
-        double stdDevs = robotAngularVelocity.in(DegreesPerSecond) / 720.0;
+        double stdDevs = Math.abs(robotAngularVelocity.in(DegreesPerSecond)) / 720.0;
 
         stdDevs += robotTranslationalVelocity / 10.0;
 
@@ -120,13 +120,13 @@ public class LimelightSubsystem extends SubsystemBase {
 
                 if (stdDevs.stdDevs() != Double.MAX_VALUE) {
                     RobotContainer.swerveSubsystem.addVisionMeasurement(limelightMeasurement.pose, limelightMeasurement.timestampSeconds, VecBuilder.fill(stdDevs.stdDevs(), stdDevs.stdDevs(), Double.MAX_VALUE));
-                    SmartDashboard.putNumberArray("LimeLight/" + limelight + "/Position", PoseHelpers.convertPoseToNumbers(limelightMeasurement.pose));
+                    SmartDashboard.putNumberArray("Limelight/" + limelight + "/Position", PoseHelpers.convertPoseToNumbers(limelightMeasurement.pose));
                     SmartDashboard.putNumber("Limelight/" + limelight + "/Tag Count", limelightMeasurement.tagCount);
                 }
 
                 SmartDashboard.putNumber("Limelight/" + limelight + "/StdDevs", stdDevs.stdDevs());
                 SmartDashboard.putString("Limelight/" + limelight + "/Rejction", stdDevs.visionRejection().toString());
-                SmartDashboard.putBoolean("LimeLight/" + limelight + "/Tag", stdDevs.stdDevs() != Double.MAX_VALUE);
+                SmartDashboard.putBoolean("Limelight/" + limelight + "/Tag", stdDevs.stdDevs() != Double.MAX_VALUE);
 
             } catch (Exception e) {
                 System.err.println("An error occurred: " + e.getMessage());
