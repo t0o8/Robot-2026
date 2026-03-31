@@ -95,7 +95,7 @@ public final class Constants {
         public static final Angle TURRET_PITCH_UPPER_LIMIT = Degree.of(40);
         public static final Angle TURRET_PITCH_LOWER_LIMIT = Degree.of(1);
         public static final Translation3d TURRET_PIVOT_OFFSET = new Translation3d(
-            0.0,
+            -0.1,
             0.0,
             0.18
         ); // In meters
@@ -196,7 +196,7 @@ public final class Constants {
         public static final int TPS = 20;
         public static final int MAX_STEPS = 15;
         public static final double DRAG_CONSTANT = 0.55;
-        public static final double EFFICENCY = 0.3925;
+        public static final double EFFICENCY = 0.39;
         public static final double ROT_DRAG_CONSTANT = 0.05;
         public static final double LIFT_CONSTANT = 0.35;
         public static final double CROSS_SECTION_AREA = 0.01767;
@@ -222,5 +222,9 @@ public final class Constants {
         public static final Distance FIELD_CHECK_DISTANCE = Meter.of(1);
 
         public static final double SINGLE_TAG_STARTING_STD_DEV = 1;
+        public static final double SINGLE_TAG_DISTANCE_FACTOR = 0.5;
+
+        public static final double MULTI_TAG_STARTING_STD_DEV = 0.4;
+        public static final double MULTI_TAG_DISTANCE_FACTOR = 0.1;
     }
 }

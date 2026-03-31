@@ -127,15 +127,6 @@ public class CalculationSubsystem {
             return;
         }
 
-        /*
-        for (int index = 0; index < 4; index++) {
-            double distance = botPose.getTranslation().getDistance(trenchZone[index]);
-            if (distance < Constants.FieldConstants.TRENCH_RADIUS.in(Meter)) {
-                botZone = Zone.TRENCH;
-                return;
-            }
-        }
-        */
         
         if (allianceZone[0].getX() <= botPose.getX() && allianceZone[0].getY() <= botPose.getY() &&
             allianceZone[1].getX() >= botPose.getX() && allianceZone[1].getY() >= botPose.getY()) {

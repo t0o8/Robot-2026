@@ -79,9 +79,9 @@ public class LimelightSubsystem extends SubsystemBase {
                 return new VisionStdDevs(Double.MAX_VALUE, VisionRejection.SINGLE_TAG_MAX_DISTANCE);
             }
 
-            stdDevs += (1 + (Math.pow(averageTagDistance, 2.0) * 0.5));
+            stdDevs += (Constants.VisionConstants.SINGLE_TAG_STARTING_STD_DEV + (Math.pow(averageTagDistance, 2.0) * Constants.VisionConstants.SINGLE_TAG_DISTANCE_FACTOR));
         } else {
-            stdDevs += (0.4 + (averageTagDistance * 0.1));
+            stdDevs += (Constants.VisionConstants.MULTI_TAG_STARTING_STD_DEV + (averageTagDistance * Constants.VisionConstants.MULTI_TAG_DISTANCE_FACTOR));
         }
 
         stdDevs = Math.max(stdDevs, 0.05);
