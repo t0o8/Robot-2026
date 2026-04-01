@@ -474,14 +474,17 @@ public class ProjectileSimulation {
             MathUtil.inverseInterpolate(0, 10, targetDistance)
         );
 
-        double idealX = (targetPosition.getX() / targetDistance) * baseVelocity;
-        double idealY = (targetPosition.getY() / targetDistance) * baseVelocity;
+        double normX = targetPosition.getX() / targetDistance;
+        double normY = targetPosition.getY() / targetDistance;
 
-        double requiredX = idealX - robotVelocity.getX() * 0.4;
-        double requiredY = idealY - robotVelocity.getY() * 0.4;
+        double radialVelocity = robotVelocity.getX() * normX + robotVelocity.getY() * normY;
+        double tangentialVeloicty = robotVelocity.getX() * normY + robotVelocity.getY() * normX;
+
+        double adjustedRadial = baseVelocity - (radialVelocity * ((radialVelocity > 0) ? 0.2 : 0.7));
+        double adjustedTangential = tangentialVeloicty * 0.5;
 
         return MetersPerSecond.of(
-            MathUtil.clamp(Math.sqrt(requiredX * requiredX + requiredY * requiredY), 0.0, speedLimitUpper.in(MetersPerSecond))
+            MathUtil.clamp(Math.sqrt(adjustedRadial * adjustedRadial + adjustedTangential * adjustedTangential), 0.0, speedLimitUpper.in(MetersPerSecond))
         );
     }
 
@@ -521,9 +524,10 @@ public class ProjectileSimulation {
 
         double speedLimitLower = convertShooterSpeedToVelocity(RadiansPerSecond.of(this.shooterMinVelocity), Meter.of(shooterWheelRadius), efficiency).in(MetersPerSecond);
         double speedLimitUpper = convertShooterSpeedToVelocity(RadiansPerSecond.of(this.shooterMaxVelocity), Meter.of(shooterWheelRadius), efficiency).in(MetersPerSecond);
+        double launchSpeed = estimateShootingVelocity(targetPosition.toTranslation2d(), MetersPerSecond.of(speedLimitUpper), robotVelocity).in(MetersPerSecond);
 
         double launchPitch = launchAnglePitch1Temp.in(Radians);
-        double launchSpeed = estimateShootingVelocity(targetPosition.toTranslation2d(), MetersPerSecond.of(speedLimitUpper), robotVelocity).in(MetersPerSecond);
+        
         double launchYaw = Math.atan2(targetPosition.getY(), targetPosition.getX());
 
         double perturbation = 0.05;
