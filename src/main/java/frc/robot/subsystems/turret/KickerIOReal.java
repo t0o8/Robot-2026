@@ -18,7 +18,7 @@ public class KickerIOReal implements KickerIO {
         kickerMotor = new SparkMax(Constants.KickerConstants.KICKER_MOTOR_ID, MotorType.kBrushless);
 
         kickerConfig = new SparkMaxConfig();
-        kickerConfig.idleMode(IdleMode.kCoast);
+        kickerConfig.idleMode(IdleMode.kBrake);
         kickerConfig.inverted(Constants.KickerConstants.KICKER_MOTOR_INVERTED);
         kickerConfig.smartCurrentLimit(30); 
         kickerMotor.configure(kickerConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);

@@ -17,7 +17,7 @@ public class SpindexerIOReal implements SpindexerIO {
         spindexerMotor = new SparkMax(Constants.SpindexerConstants.SPINDEXER_MOTOR_ID, MotorType.kBrushless);
 
         spindexerConfig = new SparkMaxConfig();
-        spindexerConfig.idleMode(IdleMode.kCoast);
+        spindexerConfig.idleMode(IdleMode.kBrake);
         spindexerConfig.inverted(Constants.SpindexerConstants.SPINDEXER_MOTOR_INVERTED);
         spindexerConfig.smartCurrentLimit(30); 
         spindexerMotor.configure(spindexerConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);

@@ -11,6 +11,7 @@ import frc.robot.RobotContainer;
 import frc.robot.libraries.StateMachine;
 import frc.robot.subsystems.spindexer.SpindexerSubsystem.SpindexerState;
 import frc.robot.subsystems.turret.KickerSubsystem.KickerState;
+import frc.robot.subsystems.turret.ShooterSubsystem.ShooterState;
 import frc.robot.subsystems.turret.TurretSubsystem.TurretState;
 
 public class SmartShootCommand extends Command {
@@ -53,9 +54,18 @@ public class SmartShootCommand extends Command {
                 break;
         }
 
-        if (RobotContainer.turretSubsystem.getCurrentState() != TurretState.READY
-            || RobotContainer.turretSubsystem.getTurretYaw().in(Radian) < Constants.TurretConstants.TURRET_YAW_LOWER_LIMIT.in(Radian) + Constants.ShooterConstants.SHOOTER_YAW_DEADZONE.in(Radian)
+        boolean shootingAllowed = true;
+
+        if (RobotContainer.turretSubsystem.getCurrentState() != TurretState.READY) {
+            shootingAllowed = false;
+        } else if (RobotContainer.turretSubsystem.getTurretYaw().in(Radian) < Constants.TurretConstants.TURRET_YAW_LOWER_LIMIT.in(Radian) + Constants.ShooterConstants.SHOOTER_YAW_DEADZONE.in(Radian)
             || RobotContainer.turretSubsystem.getTurretYaw().in(Radian) > Constants.TurretConstants.TURRET_YAW_UPPER_LIMIT.in(Radian) - Constants.ShooterConstants.SHOOTER_YAW_DEADZONE.in(Radian)) {
+            shootingAllowed = false;
+        } else if (RobotContainer.shooterSubsystem.getCurrentState() != ShooterState.READY) {
+            shootingAllowed = false;
+        }
+
+        if (shootingAllowed == false) {
             RobotContainer.spindexerSubsystem.requestDesiredState(SpindexerState.IDLE, 7);
             RobotContainer.kickerSubsystem.requestDesiredState(KickerState.IDLE, 7);
             return;

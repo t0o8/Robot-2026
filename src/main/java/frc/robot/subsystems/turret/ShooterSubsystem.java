@@ -15,7 +15,6 @@ import frc.robot.Constants;
 import frc.robot.libraries.SubsystemStateMachine;
 
 public class ShooterSubsystem extends SubsystemStateMachine<frc.robot.subsystems.turret.ShooterSubsystem.ShooterState> {
-    private final double SHOOTER_THRESHOLD = 1; // RPS
 
     public enum ShooterState {
         IDLE,
@@ -68,7 +67,7 @@ public class ShooterSubsystem extends SubsystemStateMachine<frc.robot.subsystems
             case SPOOLING:
                 if (getDesiredState() == ShooterState.IDLE) {
                     transitionTo(ShooterState.IDLE);
-                } else if (Math.abs(getSpeed().in(RotationsPerSecond) - getTargetSpeed().in(RotationsPerSecond)) < SHOOTER_THRESHOLD) {
+                } else if (Math.abs(getSpeed().in(RotationsPerSecond) - getTargetSpeed().in(RotationsPerSecond)) < Constants.ShooterConstants.SHOOTER_READY_THRESHOLD.in(RotationsPerSecond)) {
                     transitionTo(ShooterState.READY);
                 }
 
@@ -76,7 +75,7 @@ public class ShooterSubsystem extends SubsystemStateMachine<frc.robot.subsystems
             case READY:
                 if (getDesiredState() == ShooterState.IDLE) {
                     transitionTo(ShooterState.IDLE);
-                } else if (Math.abs(getSpeed().in(RotationsPerSecond) - getTargetSpeed().in(RotationsPerSecond)) > (SHOOTER_THRESHOLD + 0.1)) {
+                } else if (Math.abs(getSpeed().in(RotationsPerSecond) - getTargetSpeed().in(RotationsPerSecond)) > (Constants.ShooterConstants.SHOOTER_READY_THRESHOLD.in(RotationsPerSecond) + 0.1)) {
                     transitionTo(ShooterState.SPOOLING);
                 }
 

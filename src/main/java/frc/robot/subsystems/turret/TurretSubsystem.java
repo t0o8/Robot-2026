@@ -25,8 +25,6 @@ import frc.robot.subsystems.turret.CalculationSubsystem.Zone;
 
 public class TurretSubsystem extends SubsystemStateMachine<frc.robot.subsystems.turret.TurretSubsystem.TurretState> {
 
-    private final double TURRET_THRESHOLD = 0.02; // Radian
-
     public enum TurretState {
         IDLE,
         HOMING,
@@ -277,8 +275,8 @@ public class TurretSubsystem extends SubsystemStateMachine<frc.robot.subsystems.
                     resetTurretHoming();
                     transitionTo(TurretState.HOMING);
                 } else if (
-                    Math.abs(getTurretTargetPitch().in(Radian) - getTurretPitch().in(Radian)) <= TURRET_THRESHOLD &&
-                    Math.abs(getTurretTargetYaw().in(Radian) - getTurretYaw().in(Radian)) <= TURRET_THRESHOLD
+                    Math.abs(getTurretTargetPitch().in(Radian) - getTurretPitch().in(Radian)) <= Constants.TurretConstants.TURRET_PITCH_READY_THRESHOLD.in(Radian) &&
+                    Math.abs(getTurretTargetYaw().in(Radian) - getTurretYaw().in(Radian)) <= Constants.TurretConstants.TURRET_YAW_READY_THRESHOLD.in(Radian)
                 ) {
                     transitionTo(TurretState.READY);
                 }
@@ -295,8 +293,8 @@ public class TurretSubsystem extends SubsystemStateMachine<frc.robot.subsystems.
                     resetTurretHoming();
                     transitionTo(TurretState.HOMING);
                 } else if (
-                    Math.abs(getTurretTargetPitch().in(Radian) - getTurretPitch().in(Radian)) >= (TURRET_THRESHOLD + 0.02) ||
-                    Math.abs(getTurretTargetYaw().in(Radian) - getTurretYaw().in(Radian)) >= (TURRET_THRESHOLD + 0.02)
+                    Math.abs(getTurretTargetPitch().in(Radian) - getTurretPitch().in(Radian)) >= (Constants.TurretConstants.TURRET_PITCH_READY_THRESHOLD.in(Radian) + 0.02) ||
+                    Math.abs(getTurretTargetYaw().in(Radian) - getTurretYaw().in(Radian)) >= (Constants.TurretConstants.TURRET_YAW_READY_THRESHOLD.in(Radian) + 0.02)
                 ) {
                     transitionTo(TurretState.AIMING);
                 }

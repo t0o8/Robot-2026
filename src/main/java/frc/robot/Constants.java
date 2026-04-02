@@ -10,6 +10,7 @@ import static edu.wpi.first.units.Units.Meter;
 import static edu.wpi.first.units.Units.MetersPerSecond;
 import static edu.wpi.first.units.Units.MetersPerSecondPerSecond;
 import static edu.wpi.first.units.Units.Pound;
+import static edu.wpi.first.units.Units.Radian;
 import static edu.wpi.first.units.Units.RotationsPerSecond;
 import static edu.wpi.first.units.Units.RotationsPerSecondPerSecond;
 import static edu.wpi.first.units.Units.Second;
@@ -72,6 +73,7 @@ public final class Constants {
         public static final int TURRET_YAW_HOMING_SENSOR_DIO = 2;
         public static final Voltage TURRET_YAW_HOMING_SEARCHING_VOLTAGE = Volt.of(-0.65);
         public static final Voltage TURRET_YAW_HOMING_REFINING_VOLTAGE = Volt.of(0.25);
+        public static final Angle TURRET_YAW_READY_THRESHOLD = Radian.of(0.05);
     
         public static final Angle TURRET_YAW_OFFSET = Degree.of(-3);
         public static final Angle TURRET_YAW_LOWER_LIMIT = Degree.of(-180);
@@ -91,6 +93,7 @@ public final class Constants {
         public static final AngularVelocity TURRET_PITCH_MAX_VELOCITY = DegreesPerSecond.of(600);
         public static final AngularAcceleration TURRET_PITCH_MAX_ACCELERATION = DegreesPerSecondPerSecond.of(600);
         public static final Angle TURRET_PITCH_IZONE = Degree.of(5);
+        public static final Angle TURRET_PITCH_READY_THRESHOLD = Radian.of(0.05);
 
         public static final Angle TURRET_PITCH_UPPER_LIMIT = Degree.of(40);
         public static final Angle TURRET_PITCH_LOWER_LIMIT = Degree.of(1);
@@ -126,6 +129,7 @@ public final class Constants {
         public static final Distance SHOOTER_WHEEL_RADIUS = Inch.of(2);
         public static final AngularVelocity SHOOTER_MAX_VELOCITY = RotationsPerSecond.of(90);
         public static final AngularVelocity SHOOTER_MIN_VELOCITY = RotationsPerSecond.of(30);
+        public static final AngularVelocity SHOOTER_READY_THRESHOLD = RotationsPerSecond.of(1);
 
         public static final Angle SHOOTER_YAW_DEADZONE = Degree.of(10);
            
