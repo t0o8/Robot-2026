@@ -1,6 +1,7 @@
 package frc.robot.commands.smart;
 
 import static edu.wpi.first.units.Units.Amp;
+import static edu.wpi.first.units.Units.Radian;
 
 import edu.wpi.first.math.filter.Debouncer;
 import edu.wpi.first.wpilibj.Timer;
@@ -52,7 +53,9 @@ public class SmartShootCommand extends Command {
                 break;
         }
 
-        if (RobotContainer.turretSubsystem.getCurrentState() != TurretState.READY) {
+        if (RobotContainer.turretSubsystem.getCurrentState() != TurretState.READY
+            || RobotContainer.turretSubsystem.getTurretYaw().in(Radian) < Constants.TurretConstants.TURRET_YAW_LOWER_LIMIT.in(Radian) + Constants.ShooterConstants.SHOOTER_YAW_DEADZONE.in(Radian)
+            || RobotContainer.turretSubsystem.getTurretYaw().in(Radian) > Constants.TurretConstants.TURRET_YAW_UPPER_LIMIT.in(Radian) - Constants.ShooterConstants.SHOOTER_YAW_DEADZONE.in(Radian)) {
             RobotContainer.spindexerSubsystem.requestDesiredState(SpindexerState.IDLE, 7);
             RobotContainer.kickerSubsystem.requestDesiredState(KickerState.IDLE, 7);
             return;

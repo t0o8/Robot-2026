@@ -126,6 +126,8 @@ public final class Constants {
         public static final Distance SHOOTER_WHEEL_RADIUS = Inch.of(2);
         public static final AngularVelocity SHOOTER_MAX_VELOCITY = RotationsPerSecond.of(90);
         public static final AngularVelocity SHOOTER_MIN_VELOCITY = RotationsPerSecond.of(30);
+
+        public static final Angle SHOOTER_YAW_DEADZONE = Degree.of(10);
            
     }
     
