@@ -203,6 +203,10 @@ public class TurretSubsystem extends SubsystemStateMachine<frc.robot.subsystems.
         turretManualPitch = pitch;
     }
 
+    public void resetPitchPosition() {
+        io.resetPitchPosition();
+    }
+
     @Override
     public void periodic() {
         if (RobotContainer.calculationSubsystem.getZone() == Zone.TRENCH) {

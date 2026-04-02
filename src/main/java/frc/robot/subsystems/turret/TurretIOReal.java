@@ -72,6 +72,7 @@ public class TurretIOReal implements TurretIO {
         yawHomingCounter.setUpSourceEdge(true,false);
 
         setYawEncoderPosition(turretYawEncoder.getPosition());
+        turretPitchEncoder.setPosition(0);
     }
 
     @Override
@@ -144,5 +145,10 @@ public class TurretIOReal implements TurretIO {
     @Override
     public void resetHomingCounter() {
         yawHomingCounter.reset();
+    }
+
+    @Override
+    public void resetPitchPosition() {
+        turretPitchEncoder.setPosition(0);
     }
 }

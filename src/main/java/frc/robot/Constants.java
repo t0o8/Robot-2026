@@ -71,7 +71,7 @@ public final class Constants {
         public static final int TURRET_YAW_HOMING_SENSOR_DIO = 2;
         public static final Voltage TURRET_YAW_HOMING_SEARCHING_VOLTAGE = Volt.of(-0.65);
         public static final Voltage TURRET_YAW_HOMING_REFINING_VOLTAGE = Volt.of(0.25);
-        public static final Angle TURRET_YAW_READY_THRESHOLD = Radian.of(0.05);
+        public static final Angle TURRET_YAW_READY_THRESHOLD = Radian.of(0.1);
     
         public static final Angle TURRET_YAW_OFFSET = Degree.of(-3);
         public static final Angle TURRET_YAW_LOWER_LIMIT = Degree.of(-180);
@@ -81,9 +81,9 @@ public final class Constants {
         public static final boolean TURRET_PITCH_MOTOR_INVERTED = false;
         public static final double TURRET_PITCH_GEAR_RATIO = 160.0 / 14.0; // Rotations of the motor for one rotation of the pitch
         public static final double TURRET_PITCH_ZERO_OFFSET = 0;
-        public static final double TURRET_PITCH_P = 4.25;
+        public static final double TURRET_PITCH_P = 4.2;
         public static final double TURRET_PITCH_I = 0;
-        public static final double TURRET_PITCH_D = 0.035;
+        public static final double TURRET_PITCH_D = 0.03;
         public static final Voltage TURRET_PITCH_S = Volts.of(0.1);
         public static final Voltage TURRET_PITCH_G = Volts.of(0.145);
         public static final double TURRET_PITCH_V = 0.135; // Unit is V/(rad/s)
@@ -104,7 +104,7 @@ public final class Constants {
 
         public static final Angle TURRET_STOWED_PITCH_ANGLE = TURRET_PITCH_LOWER_LIMIT;
 
-        public static final Time TURRET_LATENCY = Second.of(0.01);
+        public static final Time TURRET_LATENCY = Second.of(0.05);
     }
 
     public final class ShooterConstants {
@@ -118,16 +118,16 @@ public final class Constants {
 
         public static final double SHOOTER_GEAR_RATIO = 1; // Rotations of the motor for one rotation of the wheels
 
-        public static final double SHOOTER_P = 0.02;
+        public static final double SHOOTER_P = 0.03;
         public static final double SHOOTER_I = 0.0;
-        public static final double SHOOTER_D = 0.0;
+        public static final double SHOOTER_D = 0.003;
         public static final Voltage SHOOTER_S = Volts.of(0.1);
-        public static final double SHOOTER_V = 0.134; // Unit is V/(rotations/s)
+        public static final double SHOOTER_V = 0.135; // Unit is V/(rotations/s)
         public static final double SHOOTER_A = 0.005; // Unit is V/(rotations/s^2)
         public static final Distance SHOOTER_WHEEL_RADIUS = Inch.of(2);
         public static final AngularVelocity SHOOTER_MAX_VELOCITY = RotationsPerSecond.of(90);
         public static final AngularVelocity SHOOTER_MIN_VELOCITY = RotationsPerSecond.of(30);
-        public static final AngularVelocity SHOOTER_READY_THRESHOLD = RotationsPerSecond.of(1);
+        public static final AngularVelocity SHOOTER_READY_THRESHOLD = RotationsPerSecond.of(4);
 
         public static final Angle SHOOTER_YAW_DEADZONE = Degree.of(10);
            
@@ -190,7 +190,7 @@ public final class Constants {
         public static final int TPS = 25;
         public static final int MAX_STEPS = 15;
         public static final double DRAG_CONSTANT = 0.57;
-        public static final double EFFICENCY = 0.46;
+        public static final double EFFICENCY = 0.455;
         public static final double ROT_DRAG_CONSTANT = 0.05;
         public static final double LIFT_CONSTANT = 0.35;
         public static final double CROSS_SECTION_AREA = 0.01767;

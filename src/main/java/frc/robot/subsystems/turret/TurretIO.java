@@ -15,4 +15,6 @@ public interface TurretIO {
     default boolean getHomingSensor() {return false;}
     default boolean getHomingCounter() {return false;}
     default void resetHomingCounter() {}
+
+    default void resetPitchPosition() {}
 }

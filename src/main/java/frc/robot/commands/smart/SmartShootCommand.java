@@ -64,6 +64,8 @@ public class SmartShootCommand extends Command {
             shootingAllowed = false;
         }
 
+        
+
         if (shootingAllowed == false) {
             RobotContainer.spindexerSubsystem.requestDesiredState(SpindexerState.IDLE, 7);
             RobotContainer.kickerSubsystem.requestDesiredState(KickerState.IDLE, 7);

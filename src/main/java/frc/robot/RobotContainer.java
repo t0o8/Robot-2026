@@ -42,6 +42,7 @@ import frc.robot.commands.spindexer.ReverseSpindexerCommand;
 import frc.robot.commands.turret.ActivateShooterCommand;
 import frc.robot.commands.turret.HomeTurretCommand;
 import frc.robot.commands.turret.ManualStowTurretCommand;
+import frc.robot.commands.turret.ResetTurretPitchCommand;
 import frc.robot.commands.turret.ToggleFixedAimCommand;
 import frc.robot.commands.turret.ToggleManualCommand;
 import frc.robot.commands.turret.TurretAutoAimCommand;
@@ -232,6 +233,7 @@ public class RobotContainer {
 
 		driverController.leftBumper().whileTrue(new ManualStowTurretCommand());
 
+		driverController.backButton().onTrue(new ResetTurretPitchCommand());
 		/*
 		driverController.rightTrigger().whileTrue(new ParallelCommandGroup(
 				new ActivateKickerCommand(),
@@ -268,6 +270,7 @@ public class RobotContainer {
 	}
 
 	public void initAll() {
+
 		shooterSubsystem.resetShooter();
 
 		calculationSubsystem.updateAimingPositions();
