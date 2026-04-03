@@ -124,7 +124,9 @@ public class RobotContainer {
 			swerveInputStream = SwerveInputStream.of(swerveSubsystem.getSwerveDrive(),
 				driverController.leftXCombinedSupplier(),//() -> driverController.getLeftY() * -1,
 				driverController.leftYCombinedSupplier())//() -> driverController.getLeftX() * -1)
-				.withControllerRotationAxis(driverController.rightXSupplier())
+				.withControllerRotationAxis(
+					driverController.rightXSupplier()
+				)
 				.withControllerHeadingAxis(
 					calculationSubsystem.getTargetHeadingX(),
 					calculationSubsystem.getTargetHeadingY()
