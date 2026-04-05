@@ -77,9 +77,9 @@ public class QuestNavSubsystem extends SubsystemBase {
         SmartDashboard.putBoolean("QuestNav/Tracking", questNav.isTracking());
         SmartDashboard.putNumber("QuestNav/Latency", questNav.getLatency());
         questNav.getBatteryPercent().ifPresent(
-            b -> SmartDashboard.putNumber("QuestNav/Battery%", b));
+            battery -> SmartDashboard.putNumber("QuestNav/Battery Percent", battery));
         questNav.getTrackingLostCounter().ifPresent(
-            c -> SmartDashboard.putNumber("QuestNav/TrackingLostCount", c));
+            count -> SmartDashboard.putNumber("QuestNav/Tracking Lost Count", count));
 
     }
 }

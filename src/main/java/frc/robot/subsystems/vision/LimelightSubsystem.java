@@ -93,7 +93,7 @@ public class LimelightSubsystem extends SubsystemBase {
 
         Angle robotAngle = RobotContainer.swerveSubsystem.getAngle();
         AngularVelocity robotAngularVelocity = RobotContainer.swerveSubsystem.getAngularVelocity();
-        ChassisSpeeds robotChassisSpeeds = RobotContainer.swerveSubsystem.getChassisSpeeds();
+        ChassisSpeeds robotChassisSpeeds = RobotContainer.swerveSubsystem.getRobotChassisSpeeds();
 
         for (String limelight : Constants.LimelightConstants.LIMELIGHT_NAMES) {
             LimelightHelpers.SetRobotOrientation(limelight, robotAngle.in(Degree), robotAngularVelocity.in(DegreesPerSecond), 0.0, 0.0, 0.0, 0.0);

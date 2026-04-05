@@ -51,6 +51,8 @@ import frc.robot.libraries.ProjectileSimulation.TargetErrorCode;
 import frc.robot.libraries.control.ControllerIO;
 import frc.robot.libraries.control.ControllerIOPS5;
 import frc.robot.libraries.control.ControllerIOXbox;
+import frc.robot.subsystems.drive.SwerveIO;
+import frc.robot.subsystems.drive.SwerveIOReal;
 import frc.robot.subsystems.drive.SwerveSubsystem;
 import frc.robot.subsystems.intake.IntakeDeploymentIO;
 import frc.robot.subsystems.intake.IntakeDeploymentIOReal;
@@ -83,9 +85,11 @@ public class RobotContainer {
 	public static final ControllerIO driverController = Robot.isReal() ? new ControllerIOPS5(Constants.OperatorConstants.DRIVER_CONTROLLER_PORT) : new ControllerIOPS5(Constants.OperatorConstants.DRIVER_CONTROLLER_PORT);
 
 	// Establishes subsystems
-	public static final SwerveSubsystem swerveSubsystem = new SwerveSubsystem();
+	public static final SwerveSubsystem swerveSubsystem = new SwerveSubsystem(
+		Constants.SwerveConstants.ENABLED ? new SwerveIOReal() : new SwerveIO() {}
+	);
 	public static final ShooterSubsystem shooterSubsystem = new ShooterSubsystem(
-		Constants.ShooterConstants.ENABLED ? new ShooterIOReal() : new ShooterIO(){}
+		Constants.ShooterConstants.ENABLED ? new ShooterIOReal() : new ShooterIO() {}
 	);
 	public static final TurretSubsystem turretSubsystem = new TurretSubsystem(
 		Constants.TurretConstants.ENABLED ? new TurretIOReal() : new TurretIO() {}
