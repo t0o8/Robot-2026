@@ -33,4 +33,14 @@ public class KickerIOReal implements KickerIO {
     public double getMotorCurrent() {
         return kickerMotor.getOutputCurrent();
     }
+
+    @Override
+    public boolean checkCANError() {
+        kickerMotor.getBusVoltage();
+        if (kickerMotor.getFaults().can == true) {
+            return true;
+        }
+
+        return false;
+    }
 }

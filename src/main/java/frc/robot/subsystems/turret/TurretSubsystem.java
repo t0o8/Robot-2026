@@ -217,9 +217,9 @@ public class TurretSubsystem extends SubsystemStateMachine<frc.robot.subsystems.
         }
 
         if ((timestamp - lastErrorTimestamp) < Constants.HealthConstants.CAN_ERROR_PERSIST.in(Second)) {
-            RobotContainer.healthSubsystem.reportError("TurretSubsystem", ErrorConstants.SPARKMAX_CAN_ERROR);
+            RobotContainer.healthSubsystem.reportError("TurretSubsystem", ErrorConstants.MOTOR_CAN_ERROR);
         } else {
-            RobotContainer.healthSubsystem.clearError("TurretSubsystem", ErrorConstants.SPARKMAX_CAN_ERROR);
+            RobotContainer.healthSubsystem.clearError("TurretSubsystem", ErrorConstants.MOTOR_CAN_ERROR);
         }
     }
 

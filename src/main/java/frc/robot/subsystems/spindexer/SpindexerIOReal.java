@@ -32,4 +32,14 @@ public class SpindexerIOReal implements SpindexerIO {
     public double getMotorCurrent() {
         return spindexerMotor.getOutputCurrent();
     }
+
+    @Override
+    public boolean checkCANError() {
+        spindexerMotor.getBusVoltage();
+        if (spindexerMotor.getFaults().can == true) {
+            return true;
+        }
+
+        return false;
+    }
 }

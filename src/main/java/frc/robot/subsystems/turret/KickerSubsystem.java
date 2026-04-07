@@ -1,11 +1,14 @@
 package frc.robot.subsystems.turret;
 
 import static edu.wpi.first.units.Units.Amp;
+import static edu.wpi.first.units.Units.Second;
 import static edu.wpi.first.units.Units.Volt;
 
 import edu.wpi.first.units.measure.Current;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants;
+import frc.robot.ErrorConstants;
 import frc.robot.RobotContainer;
 import frc.robot.libraries.SubsystemStateMachine;
 import frc.robot.subsystems.turret.CalculationSubsystem.Zone;
@@ -21,6 +24,8 @@ public class KickerSubsystem extends SubsystemStateMachine<frc.robot.subsystems.
     
     private final KickerIO io;
 
+    private double lastErrorTimestamp = 0.0;
+
     public KickerSubsystem(KickerIO io) {
         super(KickerState.IDLE, KickerState.IDLE);
 
@@ -29,6 +34,19 @@ public class KickerSubsystem extends SubsystemStateMachine<frc.robot.subsystems.
 
     public Current getMotorCurrent() {
         return Amp.of(io.getMotorCurrent());
+    }
+
+    public void checkCanHealth() {
+        double timestamp = Timer.getFPGATimestamp();
+        if (io.checkCANError()) {
+            lastErrorTimestamp = timestamp;
+        }
+
+        if ((timestamp - lastErrorTimestamp) < Constants.HealthConstants.CAN_ERROR_PERSIST.in(Second)) {
+            RobotContainer.healthSubsystem.reportError("KickerSubsystem", ErrorConstants.MOTOR_CAN_ERROR);
+        } else {
+            RobotContainer.healthSubsystem.clearError("KickerSubsystem", ErrorConstants.MOTOR_CAN_ERROR);
+        }
     }
 
     @Override
@@ -100,6 +118,8 @@ public class KickerSubsystem extends SubsystemStateMachine<frc.robot.subsystems.
         }
 
         io.setMotorVoltage(kickerVoltage);
+
+        checkCanHealth();
 
         SmartDashboard.putNumber("Kicker/Voltage", kickerVoltage);
 

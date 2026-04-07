@@ -1,9 +1,13 @@
 package frc.robot.subsystems.intake;
 
+import static edu.wpi.first.units.Units.Second;
 import static edu.wpi.first.units.Units.Volt;
 
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants;
+import frc.robot.ErrorConstants;
+import frc.robot.RobotContainer;
 import frc.robot.libraries.SubsystemStateMachine;
 
 public class IntakeSubsystem extends SubsystemStateMachine<frc.robot.subsystems.intake.IntakeSubsystem.IntakeState>{
@@ -15,10 +19,25 @@ public class IntakeSubsystem extends SubsystemStateMachine<frc.robot.subsystems.
 
     private final IntakeIO io;
 
+    private double lastErrorTimestamp = 0.0;
+
     public IntakeSubsystem(IntakeIO io) {
         super(IntakeState.IDLE, IntakeState.IDLE);
 
         this.io = io;
+    }
+
+    public void checkCanHealth() {
+        double timestamp = Timer.getFPGATimestamp();
+        if (io.checkCANError()) {
+            lastErrorTimestamp = timestamp;
+        }
+
+        if ((timestamp - lastErrorTimestamp) < Constants.HealthConstants.CAN_ERROR_PERSIST.in(Second)) {
+            RobotContainer.healthSubsystem.reportError("IntakeSubsystem", ErrorConstants.MOTOR_CAN_ERROR);
+        } else {
+            RobotContainer.healthSubsystem.clearError("IntakeSubsystem", ErrorConstants.MOTOR_CAN_ERROR);
+        }
     }
 
     @Override
@@ -65,6 +84,8 @@ public class IntakeSubsystem extends SubsystemStateMachine<frc.robot.subsystems.
         }
 
         io.setIntakeMotorVoltage(intakeVoltage);
+
+        checkCanHealth();
 
         SmartDashboard.putNumber("Intake/Voltage", intakeVoltage);
 
