@@ -36,7 +36,7 @@ public final class ErrorConstants {
     public static final ErrorCode SWERVE_ABSOLUTE_ENCODER_ERROR = new ErrorCode(
         10,
         "A swerve drive absolute encoder has an error",
-        LEDPattern.steps(Map.of(0, Color.kRed, 0.5, Color.kGreen)),
+        LEDPattern.steps(Map.of(0, Color.kWhite, 0.5, Color.kPurple)),
         false,
         true
     );

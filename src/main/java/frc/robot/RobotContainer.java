@@ -65,9 +65,11 @@ import frc.robot.subsystems.turret.KickerIO;
 import frc.robot.subsystems.turret.KickerIOReal;
 import frc.robot.subsystems.turret.KickerSubsystem;
 import frc.robot.subsystems.turret.ShooterIO;
+import frc.robot.subsystems.turret.ShooterIOKrakenReal;
 import frc.robot.subsystems.turret.ShooterIOReal;
 import frc.robot.subsystems.turret.ShooterSubsystem;
 import frc.robot.subsystems.turret.TurretIO;
+import frc.robot.subsystems.turret.TurretIOKrakenReal;
 import frc.robot.subsystems.turret.TurretIOReal;
 import frc.robot.subsystems.turret.TurretSubsystem;
 import frc.robot.subsystems.turret.TurretSubsystem.TurretState;
@@ -84,10 +86,10 @@ public class RobotContainer {
 		Constants.SwerveConstants.ENABLED ? new SwerveIOReal() : new SwerveIO() {}
 	);
 	public static final ShooterSubsystem shooterSubsystem = new ShooterSubsystem(
-		Constants.ShooterConstants.ENABLED ? new ShooterIOReal() : new ShooterIO() {}
+		Constants.ShooterConstants.ENABLED ? new ShooterIOKrakenReal() : new ShooterIO() {}
 	);
 	public static final TurretSubsystem turretSubsystem = new TurretSubsystem(
-		Constants.TurretConstants.ENABLED ? new TurretIOReal() : new TurretIO() {}
+		Constants.TurretConstants.ENABLED ? new TurretIOKrakenReal() : new TurretIO() {}
 	);
 	public static final KickerSubsystem kickerSubsystem = new KickerSubsystem(
 		Constants.KickerConstants.ENABLED ? new KickerIOReal() : new KickerIO() {}
@@ -286,7 +288,7 @@ public class RobotContainer {
 			} else {
 				healthSubsystem.clearError("Main", ErrorConstants.JOYSTICKS_DISCONNECTED);
 			}
-			
+
 			healthSubsystem.clearError("Main", ErrorConstants.DS_DISCONNECTED);
 		}
 	}
