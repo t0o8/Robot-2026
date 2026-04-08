@@ -200,6 +200,8 @@ public final class Constants {
 
         public static final Time CAN_ERROR_PERSIST = Second.of(2.5);
         public static final Time ABSOLUTE_ENCODER_ERROR_PERSIST = Second.of(1);
+
+        public static final Voltage LOW_BATTERY_THRESHOLD = Volt.of(11.9);
     }
 
     public final class FuelPhysicsConstants {

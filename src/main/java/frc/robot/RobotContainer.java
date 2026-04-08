@@ -5,6 +5,7 @@
 package frc.robot;
 
 import static edu.wpi.first.units.Units.Meter;
+import static edu.wpi.first.units.Units.Volt;
 
 import java.util.function.Supplier;
 
@@ -12,10 +13,12 @@ import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
 import com.pathplanner.lib.commands.PathPlannerAuto;
 
+import edu.wpi.first.math.filter.LinearFilter;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.RobotController;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -123,6 +126,8 @@ public class RobotContainer {
 	public static Command driveFieldOrientedAngularVelocity;
 	
 	private int lastTeam = -1;
+
+	private LinearFilter batteryVoltageFilter = LinearFilter.movingAverage(50);
 
 	public RobotContainer() {
 		if (Constants.SwerveConstants.ENABLED) {
@@ -290,6 +295,14 @@ public class RobotContainer {
 			}
 
 			healthSubsystem.clearError("Main", ErrorConstants.DS_DISCONNECTED);
+		}
+
+		double batteryVoltage = RobotController.getBatteryVoltage();
+		double smoothedVoltage = batteryVoltageFilter.calculate(batteryVoltage);
+		if (smoothedVoltage < Constants.HealthConstants.LOW_BATTERY_THRESHOLD.in(Volt)) {
+			healthSubsystem.reportError("Main", ErrorConstants.LOW_BATTERY_VOLTAGE);
+		} else {
+			healthSubsystem.clearError("Main", ErrorConstants.LOW_BATTERY_VOLTAGE);
 		}
 	}
 

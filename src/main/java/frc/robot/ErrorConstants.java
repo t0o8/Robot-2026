@@ -56,4 +56,12 @@ public final class ErrorConstants {
         false,
         true
     );
+
+    public static final ErrorCode LOW_BATTERY_VOLTAGE = new ErrorCode(
+        10,
+        "The battery is below its low voltage threshold",
+        LEDPattern.steps(Map.of(0, Color.kBrown, 0.5, Color.kGreen)),
+        false,
+        true
+    );
 }
