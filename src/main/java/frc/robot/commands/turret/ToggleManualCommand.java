@@ -29,7 +29,7 @@ public class ToggleManualCommand extends Command {
 
     @Override
     public void initialize() {
-        RobotContainer.turretSubsystem.setOverrideState(TurretState.MANUAL);
+        
 
         targetYaw = RobotContainer.turretSubsystem.getTurretYaw().in(Degree);
         targetPitch = RobotContainer.turretSubsystem.getTurretPitch().in(Degree);
@@ -37,6 +37,8 @@ public class ToggleManualCommand extends Command {
 
     @Override
     public void execute() {
+
+        RobotContainer.turretSubsystem.requestDesiredState(TurretState.MANUAL, 15);
         
         targetYaw = turretYawSupplier.getAsDouble() * 0.1;
         targetPitch += turretPitchSupplier.getAsDouble() * 0.1;
@@ -64,7 +66,7 @@ public class ToggleManualCommand extends Command {
 
     @Override
     public void end(boolean interrupted) {
-        RobotContainer.turretSubsystem.setOverrideState(null);
+        RobotContainer.turretSubsystem.requestDesiredState(TurretState.IDLE, 0);
         RobotContainer.shooterSubsystem.setTargetSpeed(RotationsPerSecond.of(0));
     }
 }

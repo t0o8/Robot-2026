@@ -6,8 +6,6 @@ public class StateMachine<E extends Enum<E>> {
     protected E currentState;
     protected E desiredState;
 
-    protected E overrideState;
-
     protected E defaultState;
 
     protected int pendingPriority = -1;
@@ -63,10 +61,6 @@ public class StateMachine<E extends Enum<E>> {
     }
 
     public E getDesiredState() {
-        if (this.overrideState != null) {
-            return this.overrideState;
-        }
-
         return this.desiredState;
     }
 
@@ -76,18 +70,6 @@ public class StateMachine<E extends Enum<E>> {
 
     public void restartStateTimer() {
         this.stateTimer.restart();
-    }
-
-    public void setOverrideState(E overrideState) {
-        this.overrideState = overrideState;
-        if (this.overrideState != null) {
-            transitionTo(this.overrideState);
-        }
-        
-    }
-
-    public E getOverrideState() {
-        return this.overrideState;
     }
 
     /**
@@ -103,10 +85,6 @@ public class StateMachine<E extends Enum<E>> {
      * @param newState The state to transition too
      **/
     public void transitionTo(E newState) {
-        if (this.overrideState != newState && this.overrideState != null) {
-            return;
-        }
-
         if (newState != currentState && newState != null) {
             this.currentState = newState;
             

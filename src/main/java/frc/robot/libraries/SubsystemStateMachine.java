@@ -45,15 +45,7 @@ public abstract class SubsystemStateMachine<E extends Enum<E>> extends Subsystem
     public void restartStateTimer() {
         stateMachine.restartStateTimer();
     }
-
-    public void setOverrideState(E overrideState) {
-        stateMachine.setOverrideState(overrideState);
-    }
-
-    public E getOverrideState() {
-        return stateMachine.getOverrideState();
-    }
-
+    
     /**
      * Transitions the current state to the desired state
      **/
