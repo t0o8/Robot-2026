@@ -324,7 +324,6 @@ public class RobotContainer {
 		}
 
 		if (!turretHomed) {
-			/*
 			if (Robot.isReal()) {
 				CommandScheduler.getInstance().cancel(turretHomeCommand);
 
@@ -333,7 +332,6 @@ public class RobotContainer {
 			} else {
 				turretHomed = true;
 			}
-			*/
 		}
 		
 	}
