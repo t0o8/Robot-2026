@@ -42,7 +42,7 @@ import edu.wpi.first.wpilibj.LEDPattern;
 import edu.wpi.first.wpilibj.util.Color;
 
 public final class Constants {
-    public static class SwerveConstants {
+    public final class SwerveConstants {
         public static final boolean ENABLED = false;
         
         public static final File SWERVE_DIRECTORY = new File(Filesystem.getDeployDirectory(), "swerve"); // File with swerve configs.
