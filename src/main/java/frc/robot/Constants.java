@@ -93,10 +93,10 @@ public final class Constants {
         public static final double TURRET_PITCH_D = 0.03;
         public static final Voltage TURRET_PITCH_S = Volts.of(0.1);
         public static final Voltage TURRET_PITCH_G = Volts.of(0.145);
-        public static final double TURRET_PITCH_V = 0.135; // Unit is V/(rad/s)
-        public static final double TURRET_PITCH_A = 0.019; // Unit is V/(rad/s^2)
-        public static final AngularVelocity TURRET_PITCH_MAX_VELOCITY = DegreesPerSecond.of(600);
-        public static final AngularAcceleration TURRET_PITCH_MAX_ACCELERATION = DegreesPerSecondPerSecond.of(600);
+        public static final double TURRET_PITCH_V = 0.130; // Unit is V/(rad/s)
+        public static final double TURRET_PITCH_A = 0.02; // Unit is V/(rad/s^2)
+        public static final AngularVelocity TURRET_PITCH_MAX_VELOCITY = DegreesPerSecond.of(2000);
+        public static final AngularAcceleration TURRET_PITCH_MAX_ACCELERATION = DegreesPerSecondPerSecond.of(1000);
         public static final Angle TURRET_PITCH_IZONE = Degree.of(5);
         public static final Angle TURRET_PITCH_READY_THRESHOLD = Radian.of(0.05);
 
