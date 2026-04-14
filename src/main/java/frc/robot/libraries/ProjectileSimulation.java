@@ -514,9 +514,15 @@ public class ProjectileSimulation {
             return new TargetSolution(TargetErrorCode.IDEAL_PITCH, MetersPerSecond.of(0), Radians.of(0.0), Radians.of(0.0), Second.of(Timer.getTimestamp()), new TargetDebug(0, 0, 0, Second.of(Timer.getFPGATimestamp() - startTime)));
         }
 
+        // Calculate the actual boundaries the shooter can physically achieve at the current efficiency
         double speedLimitLower = convertShooterSpeedToVelocity(RadiansPerSecond.of(this.shooterMinVelocity), Meter.of(shooterWheelRadius), efficiency).in(MetersPerSecond);
         double speedLimitUpper = convertShooterSpeedToVelocity(RadiansPerSecond.of(this.shooterMaxVelocity), Meter.of(shooterWheelRadius), efficiency).in(MetersPerSecond);
-        double launchSpeed = estimateShootingVelocity(targetPosition.toTranslation2d(), MetersPerSecond.of(speedLimitUpper), robotVelocity).in(MetersPerSecond);
+
+        double theoreticalMaxSpeed = convertShooterSpeedToVelocity(RadiansPerSecond.of(this.shooterMaxVelocity), Meter.of(shooterWheelRadius), 1.0).in(MetersPerSecond);
+
+        double launchSpeed = estimateShootingVelocity(targetPosition.toTranslation2d(), MetersPerSecond.of(theoreticalMaxSpeed), robotVelocity).in(MetersPerSecond);
+
+        launchSpeed = MathUtil.clamp(launchSpeed, speedLimitLower, speedLimitUpper);
 
         double launchPitch = launchAnglePitch1Temp.in(Radians);
         

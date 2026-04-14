@@ -215,7 +215,7 @@ public final class Constants {
         public static final int TPS = 25;
         public static final int MAX_STEPS = 15;
         public static final double DRAG_CONSTANT = 0.6;
-        public static final double EFFICENCY = 0.45;
+        public static final double EFFICENCY = 0.4;
         public static final double ROT_DRAG_CONSTANT = 0.05;
         public static final double LIFT_CONSTANT = 0.35;
         public static final double CROSS_SECTION_AREA = 0.01767;
