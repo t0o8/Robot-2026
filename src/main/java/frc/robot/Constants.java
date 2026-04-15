@@ -142,13 +142,13 @@ public final class Constants {
     public final class LightConstants {
         public static final int LIGHT_PORT = 0;
 
-        public static final int LIGHT_LENGTH = 240;
+        public static final int LIGHT_LENGTH = 198;
 
         public static final LEDPattern COLOR_SHOOTER_ON = LEDPattern.solid(new Color(0, 255, 0));
         public static final LEDPattern COLOR_SHOOTER_OFF = LEDPattern.solid(new Color(255, 0, 0));
         public static final LEDPattern COLOR_INVALID_SHOT = LEDPattern.solid(new Color(0, 0, 255));
         public static final LEDPattern COLOR_TURRET_HOMING = LEDPattern.solid(Color.kPurple);
-        public static final LEDPattern COLOR_BOT_DISABLED = LEDPattern.rainbow(255, 255).scrollAtAbsoluteSpeed(MetersPerSecond.of(0.25), Meter.of(0.015));
+        public static final LEDPattern COLOR_BOT_DISABLED = LEDPattern.rainbow(255, 255).scrollAtAbsoluteSpeed(MetersPerSecond.of(2), Meter.of(1.5));
     }
 
     public final class KickerConstants {
@@ -213,7 +213,7 @@ public final class Constants {
         public static final int TPS = 20;
         public static final int MAX_STEPS = 10;
         public static final double DRAG_CONSTANT = 0.6;
-        public static final double EFFICENCY = 0.41;
+        public static final double EFFICENCY = 0.42;
         public static final double ROT_DRAG_CONSTANT = 0.05;
         public static final double LIFT_CONSTANT = 0.35;
         public static final double CROSS_SECTION_AREA = 0.01767;
@@ -241,15 +241,15 @@ public final class Constants {
         public static final double SINGLE_TAG_STARTING_STD_DEV = 0.9;
         public static final double SINGLE_TAG_DISTANCE_FACTOR = 0.5;
 
-        public static final double MULTI_TAG_STARTING_STD_DEV = 0.2;
-        public static final double MULTI_TAG_DISTANCE_FACTOR = 0.1;
+        public static final double MULTI_TAG_STARTING_STD_DEV = 0.25;
+        public static final double MULTI_TAG_DISTANCE_FACTOR = 0.15;
     }
 
     public final class QuestConstants {
         public static final Transform3d ROBOT_TO_QUEST = new Transform3d(-0.2568, -0.2925, 0.5, new Rotation3d(0, 0, -90));
 
-        public static final double INITAL_STD_DEV_THRESHOLD = 1.0;
-        public static final double STD_DEV_THRESHOLD = 0.6;
+        public static final double INITAL_STD_DEV_THRESHOLD = 1.2;
+        public static final double STD_DEV_THRESHOLD = 0.7;
 
         public static final Matrix<N3, N1> QUESTNAV_STD_DEVS = VecBuilder.fill(
             0.02, // Trust down to 2cm in X direction
