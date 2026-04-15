@@ -94,19 +94,7 @@
                           {
                             "type": "named",
                             "data": {
-                              "name": "ActivateShooterCommand"
-                            }
-                          },
-                          {
-                            "type": "named",
-                            "data": {
-                              "name": "ActivateKickerCommand"
-                            }
-                          },
-                          {
-                            "type": "named",
-                            "data": {
-                              "name": "ActivateSpindexerCommand"
+                              "name": "SmartShootCommand"
                             }
                           },
                           {
@@ -200,19 +188,7 @@
                           {
                             "type": "named",
                             "data": {
-                              "name": "ActivateShooterCommand"
-                            }
-                          },
-                          {
-                            "type": "named",
-                            "data": {
-                              "name": "ActivateKickerCommand"
-                            }
-                          },
-                          {
-                            "type": "named",
-                            "data": {
-                              "name": "ActivateSpindexerCommand"
+                              "name": "SmartShootCommand"
                             }
                           },
                           {

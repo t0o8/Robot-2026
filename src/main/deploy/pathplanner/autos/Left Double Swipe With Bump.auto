@@ -45,15 +45,90 @@
                       }
                     },
                     {
-                      "type": "path",
+                      "type": "deadline",
                       "data": {
-                        "pathName": "Left Top Collect Balls Bump Exit"
+                        "commands": [
+                          {
+                            "type": "path",
+                            "data": {
+                              "pathName": "Left Top Collect Balls Bump Exit"
+                            }
+                          },
+                          {
+                            "type": "named",
+                            "data": {
+                              "name": "DeployIntakeCommand"
+                            }
+                          },
+                          {
+                            "type": "named",
+                            "data": {
+                              "name": "ActivateIntakeCommand"
+                            }
+                          }
+                        ]
                       }
                     },
                     {
                       "type": "path",
                       "data": {
                         "pathName": "Left Go Back Via Bump"
+                      }
+                    },
+                    {
+                      "type": "deadline",
+                      "data": {
+                        "commands": [
+                          {
+                            "type": "path",
+                            "data": {
+                              "pathName": "Left Shoot From Bump"
+                            }
+                          },
+                          {
+                            "type": "named",
+                            "data": {
+                              "name": "SmartShootCommand"
+                            }
+                          }
+                        ]
+                      }
+                    },
+                    {
+                      "type": "path",
+                      "data": {
+                        "pathName": "Left Bump Shoot Return Start"
+                      }
+                    },
+                    {
+                      "type": "path",
+                      "data": {
+                        "pathName": "Left Bottom Collect Balls Bump Exit"
+                      }
+                    },
+                    {
+                      "type": "path",
+                      "data": {
+                        "pathName": "Left Go Back Via Bump"
+                      }
+                    },
+                    {
+                      "type": "deadline",
+                      "data": {
+                        "commands": [
+                          {
+                            "type": "path",
+                            "data": {
+                              "pathName": "Left Shoot From Bump"
+                            }
+                          },
+                          {
+                            "type": "named",
+                            "data": {
+                              "name": "SmartShootCommand"
+                            }
+                          }
+                        ]
                       }
                     }
                   ]
