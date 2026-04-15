@@ -1,5 +1,6 @@
 package frc.robot;
 
+import static edu.wpi.first.units.Units.Percent;
 import static edu.wpi.first.units.Units.Second;
 
 import java.util.Map;
@@ -22,7 +23,7 @@ public final class ErrorConstants {
     public static final ErrorCode DS_DISCONNECTED = new ErrorCode(
         10,
         "No driver station connection",
-        LEDPattern.solid(new Color(255, 0, 0)).blink(Second.of(0.25)),
+        LEDPattern.solid(new Color(255, 0, 0)).breathe(Second.of(1.0)),
         true,
         true
     );

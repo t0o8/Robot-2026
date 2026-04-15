@@ -125,13 +125,13 @@ public final class Constants {
 
         public static final double SHOOTER_GEAR_RATIO = 1; // Rotations of the motor for one rotation of the wheels
 
-        public static final double SHOOTER_P = 1.1;
+        public static final double SHOOTER_P = 1.2;
         public static final double SHOOTER_I = 0.0;
-        public static final double SHOOTER_D = 0.0;
+        public static final double SHOOTER_D = 0.01;
         public static final Voltage SHOOTER_S = Volts.of(0.1);
-        public static final double SHOOTER_V = 0.1175; // Unit is V/(rotations/s)
+        public static final double SHOOTER_V = 0.118; // Unit is V/(rotations/s)
         public static final double SHOOTER_A = 0.005; // Unit is V/(rotations/s^2)
-        public static final Distance SHOOTER_WHEEL_RADIUS = Inch.of(2);
+        public static final Distance SHOOTER_WHEEL_RADIUS = Inch.of(1.93);
         public static final AngularVelocity SHOOTER_MAX_VELOCITY = RotationsPerSecond.of(91);
         public static final AngularVelocity SHOOTER_MIN_VELOCITY = RotationsPerSecond.of(5);
         public static final AngularVelocity SHOOTER_READY_THRESHOLD = RotationsPerSecond.of(8);
@@ -148,7 +148,7 @@ public final class Constants {
         public static final LEDPattern COLOR_SHOOTER_OFF = LEDPattern.solid(new Color(255, 0, 0));
         public static final LEDPattern COLOR_INVALID_SHOT = LEDPattern.solid(new Color(0, 0, 255));
         public static final LEDPattern COLOR_TURRET_HOMING = LEDPattern.solid(Color.kPurple);
-        public static final LEDPattern COLOR_BOT_DISABLED = LEDPattern.rainbow(255, 255).scrollAtAbsoluteSpeed(MetersPerSecond.of(2), Meter.of(1.5));
+        public static final LEDPattern COLOR_BOT_DISABLED = LEDPattern.rainbow(255, 255).scrollAtAbsoluteSpeed(MetersPerSecond.of(0.5), Meter.of(1.0 / 144.0));
     }
 
     public final class KickerConstants {
@@ -163,7 +163,7 @@ public final class Constants {
         public static final boolean ENABLED = true;
         public static final int SPINDEXER_MOTOR_ID = 29;
         public static final boolean SPINDEXER_MOTOR_INVERTED = true;
-        public static final Voltage SPINDEXER_MOTOR_VOLTAGE = Volt.of(10);
+        public static final Voltage SPINDEXER_MOTOR_VOLTAGE = Volt.of(12);
         public static final Current SPINDEXER_REVERSE_CURRENT = Amp.of(400);
     }
 
@@ -246,15 +246,16 @@ public final class Constants {
     }
 
     public final class QuestConstants {
-        public static final Transform3d ROBOT_TO_QUEST = new Transform3d(-0.2568, -0.2925, 0.5, new Rotation3d(0, 0, -90));
+        public static final Transform3d ROBOT_TO_QUEST = new Transform3d(-0.2568, -0.2925, 0.5, new Rotation3d(0, 15, -90));
 
         public static final double INITAL_STD_DEV_THRESHOLD = 1.2;
         public static final double STD_DEV_THRESHOLD = 0.7;
 
-        public static final Matrix<N3, N1> QUESTNAV_STD_DEVS = VecBuilder.fill(
-            0.02, // Trust down to 2cm in X direction
-            0.02, // Trust down to 2cm in Y direction
-            0.035 // Trust down to 2 degrees rotational
+        public static final Matrix<N3,
+         N1> QUESTNAV_STD_DEVS = VecBuilder.fill(
+            0.1,
+            0.1,
+            0.05
         );
     }
 }

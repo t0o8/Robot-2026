@@ -74,7 +74,6 @@ public class LightSubsystem extends SubsystemBase {
         LEDPattern ledPattern = determineLEDPattern();
 
         ledPattern.applyTo(ledBuffer);
-
         ledStrip.setData(ledBuffer);
     }
 }
